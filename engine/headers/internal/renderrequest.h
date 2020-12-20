@@ -1,10 +1,8 @@
 #pragma once
 #include "sprite.h"
 
-extern SDL_sem* textsync;
-
 enum RenderType {
-    REQ_IMAGE, REQ_SPRITE, REQ_TEXT
+    REQ_IMAGE, REQ_SPRITE, REQ_TEXT, REQ_RECT, REQ_FRECT
 };
 
 struct Request {
@@ -19,8 +17,9 @@ struct ImageRequest {
     int y;
     int x, w, h;
     int frame;
-    float scale;
+    float scalex, scaley;
     Texture* texture;
+    int x0, y0;
 };
 
 struct SpriteRequest {
@@ -29,11 +28,20 @@ struct SpriteRequest {
     int y;
     int x, w, h;
     int frame;
-    float scale;
+    float scalex, scaley;
     double theta;
     SDL_Point point;
     SDL_RendererFlip flip;
     Texture* texture;
+};
+
+struct RectRequest {
+    int z;
+    RenderType type;
+    int y;
+    int x, w, h;
+    float scalex, scaley;
+    SDL_Color color1, color2;
 };
 
 struct TextRequest {
@@ -41,12 +49,10 @@ struct TextRequest {
     RenderType type;
     int y;
     int x, w, h;
-    float scale;
+    float scalex, scaley;
     double theta;
     SDL_Point point;
     SDL_RendererFlip flip;
-    bool* valid;
-    int* reading;
     SDL_Texture* texture;
 };
 
@@ -58,6 +64,7 @@ union RenderRequest {
     ImageRequest image;
     SpriteRequest sprite;
     TextRequest text;
+    RectRequest rect;
 };
 
 void drawRequest(RenderRequest* request);
