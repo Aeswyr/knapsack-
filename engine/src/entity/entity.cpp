@@ -2,9 +2,7 @@
 #include "camera.h"
 
 Entity::Entity() {
-    align = new Alignment();
-    for (int i = 0; i < component_size; i++)
-        component[i] = nullptr;
+
 }
 
 void Entity::tick() {
@@ -12,17 +10,10 @@ void Entity::tick() {
         inactive--;
 }
 
-Alignment* Entity::pos() {
-    return align;
-}
 
 Entity::~Entity() {
     for (auto iterator = hitboxes.begin(); iterator != hitboxes.end(); iterator++)
         delete(iterator->second);
-    delete(align);
-    for (int i = 0; i < component_size; i++)
-        if (component[i] != nullptr)
-            delete(component[i]);
 }
 
 Hitbox* Entity::hitbox(std::string name) {

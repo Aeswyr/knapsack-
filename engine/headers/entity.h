@@ -1,26 +1,22 @@
 #pragma once
-#include "alignment.h"
 #include "hitbox.h"
 #include <unordered_map>
 #include <string>
 #include <bitset>
-#include "component.h"
 #include <iostream>
 #include <vector>
 #include "internal/entity.h"
 
 static int id_source;
-static const int component_size = 128;
 
 class Entity {
 private:
-    Component* component[component_size];
-    std::bitset<component_size> bitset;
+    std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
+    //std::bitset<CID_MAX> bitset;
     std::unordered_map<std::string, Hitbox*> hitboxes;
     int inactive = 0;
 protected:
     int id = ++id_source;
-    Alignment* align;
 
     /**
      * draws this entity's hitboxes to screen at a given offset
@@ -52,12 +48,6 @@ public:
      * Only draws while in dev mode. By default, calls renderHitboxes
      */ 
     void renderDevMode();
-
-    /**
-     * returns - a pointer to this entity's alignment
-     */ 
-    Alignment* pos();
-
 
     virtual ~Entity() = 0;
 
@@ -112,13 +102,7 @@ public:
      * typename T    -   the type of the new component
      */ 
     template <typename T> T* set() {
-        int CID = INTERNAL_ONLY_COMPONENT::getCID<T>();
-	    bitset[CID] = 1;
-        
-        if (component[CID] == nullptr) {
-            component[CID] = new T;
-        }  
-        return (T*)(component[CID]);
+        return nullptr; //TODO
     }
 
     /**
@@ -128,7 +112,7 @@ public:
      * returns      -   true if this entity has a given component, and false otherwise
      */ 
     template <typename T> bool has() {
-        return bitset[INTERNAL_ONLY_COMPONENT::getCID<T>()];
+        return false; //TODO
     }
 
     /**
@@ -138,9 +122,7 @@ public:
      * returns      -   a pointer to the component or null if the entity does not have the given component
      */ 
     template <typename T> T* get() {
-        if (bitset[INTERNAL_ONLY_COMPONENT::getCID<T>()])
-            return (T*)(component[INTERNAL_ONLY_COMPONENT::getCID<T>()]);
-        return nullptr;
+        return nullptr; //TODO
     }
 
     /**
@@ -149,7 +131,7 @@ public:
      * typenname T  -   the type of the component to remove
      */ 
     template <typename T> void del() {
-        bitset[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 0;
+        return; //TODO
     }
 };
 

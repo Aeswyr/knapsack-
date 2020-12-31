@@ -1,12 +1,11 @@
 #pragma once
-#include <bitset>
+extern unsigned int CID_MAX; // defined in component.cpp
 
 namespace INTERNAL_ONLY_COMPONENT {
-    using CID = std::size_t;
+    using CID = unsigned int;
 
 inline CID getCID() {
-	static CID last = 0;
-	return last++;
+	return CID_MAX++;
 }
 
 template <typename T> inline CID getCID() noexcept {
