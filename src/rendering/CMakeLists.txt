@@ -1,0 +1,1 @@
+target_sources(knapsackpp PRIVATE camera.cpp renderrequest.cpp sprite.cpp tileset.cpp)

@@ -2,3 +2,5 @@ CMakeCache.txt
 libs/
 build/
 release/
+CMakeFiles/
+*.cmake

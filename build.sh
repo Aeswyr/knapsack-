@@ -1,0 +1,1 @@
+CC=gcc CXX=g++ cmake . -G "MinGW Makefiles"

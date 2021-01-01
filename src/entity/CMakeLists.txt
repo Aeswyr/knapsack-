@@ -1,0 +1,1 @@
+target_sources(knapsackpp PRIVATE entity.cpp entitymanager.cpp hitbox.cpp)
