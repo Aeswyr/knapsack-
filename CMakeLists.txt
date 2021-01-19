@@ -55,7 +55,8 @@ add_subdirectory(libs/openal/)
 add_subdirectory(libs/glm/)
 add_subdirectory(libs/glfw/)
 # add_subdirectory(libs/freetype/)
-
+target_sources(knapsackpp PRIVATE libs/glad/src/glad.c)
+target_include_directories(knapsackpp PUBLIC libs/glad/include/)
 target_include_directories(knapsackpp PUBLIC libs/stb/)
 
 # add source files
