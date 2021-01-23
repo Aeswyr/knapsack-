@@ -1,11 +1,6 @@
 #pragma once
 
-#include <SDL.h>
 
-bool initWindow();
+bool initWindow(int w, int h, const char* name);
 
 void closeWindow();
-
-void parseWindowEvent(SDL_WindowEvent e);
-
-SDL_Renderer* getRenderer();

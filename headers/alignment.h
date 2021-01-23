@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL.h>
 #include "vec.h"
 
 /**
@@ -7,19 +6,8 @@
  */
 struct Alignment
 {
-private:
-	SDL_Point point;
 public:
-	Vector2 pos;
-	int* x_internal = &point.x;
-	int* y_internal = &point.y;
+	Vector3 pos;
+	Vector2 center;
 	double theta;
-	SDL_RendererFlip flip;
-
-	/**
- 	* Returns the internal point of this alignment
- 	*/
-	SDL_Point* getPoint() {
-		return &point;
-	}
 };

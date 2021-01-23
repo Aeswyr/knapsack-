@@ -1,34 +1,22 @@
 #pragma once
-#include <SDL.h>
+#include <GLFW/glfw3.h>
 
 namespace key {
     void update();
     
-    void keydown(SDL_KeyboardEvent e);
-
-    void keyup(SDL_KeyboardEvent e);
+    void keyevent(GLFWwindow* window, int key, int scancode, int action, int mods);
     
     void init();
 }
 
 namespace mouse {
-    void move(SDL_MouseMotionEvent e); 
+    void moveevent(GLFWwindow* window, double xpos, double ypos); 
 
-    void keyup(SDL_MouseButtonEvent e);
-
-    void keydown(SDL_MouseButtonEvent e);
+    void keyevent(GLFWwindow* window, int button, int action, int mods);
 }
 
 namespace gamepad {
-    void update();
 
-    void move(SDL_ControllerAxisEvent e);
-    void keyup(SDL_ControllerButtonEvent e);
-    void keydown(SDL_ControllerButtonEvent e);
-
-    void connect(SDL_ControllerDeviceEvent e);
-    void disconnect(SDL_ControllerDeviceEvent e);
-    void remap(SDL_ControllerDeviceEvent e);
-
-    void locateControllers();
+    //TODO redo
+    
 }

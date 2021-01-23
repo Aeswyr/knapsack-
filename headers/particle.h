@@ -13,10 +13,10 @@ private:
     };
     Alignment* align = nullptr;
     bool falign = false, offset = true;
-    int size, loops, z;
+    int size, loops;
     Particle* particles = nullptr;
     Renderable* sprite;
-    void (*behavior)(Vector2*, int t);
+    void (*behavior)(Vector3*, int t);
     int (*lifetime)();
     void init();
 public:
@@ -25,17 +25,15 @@ public:
      * 
      * int size                             -   the max number of particles this
      *                                          source can support
-     * int z                                -   the z level to draw particles from
-     *                                          this source at
      * Renderable* sprite                   -   The image to use for this source's
      *                                          particles
      * int(*)() lifetime                    -   an integer function modeling liftime
      *                                          for an individual particle in ticks
-     * void(*)(Vector2*, int t) behavior    -   an function which modifies the input
-     *                                          Vector2 which represents the particle's
+     * void(*)(Vector3*, int t) behavior    -   an function which modifies the input
+     *                                          Vector3 which represents the particle's
      *                                          position
      */ 
-    ParticleSource(int size, int z, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector2*, int t));
+    ParticleSource(int size, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector3*, int t));
 
     /**
      * creates a particles source which is looped a number of times. use
@@ -43,19 +41,17 @@ public:
      * 
      * int size                             -   the max number of particles this
      *                                          source can support
-     * int z                                -   the z level to draw particles from
-     *                                          this source at
      * Renderable* sprite                   -   The image to use for this source's
      *                                          particles
      * int(*)() lifetime                    -   an integer function modeling liftime
      *                                          for an individual particle in ticks
-     * void(*)(Vector2*, int t) behavior    -   an function which modifies the input
-     *                                          Vector2 which represents the particle's
+     * void(*)(Vector3*, int t) behavior    -   an function which modifies the input
+     *                                          Vector3 which represents the particle's
      *                                          position
      * int loops                            -   the number of times to loop, -1 to loop
      *                                          infinitely
      */ 
-    ParticleSource(int size, int z, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector2*, int t), int loops);
+    ParticleSource(int size, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector3*, int t), int loops);
 
     /**
      * runs calculations for all particles associated with this Source.
@@ -85,7 +81,7 @@ public:
      * 
      * Vector2 vec  -   the position that the source should be made relative to
      */ 
-    void bind(Vector2 vec);
+    void bind(Vector3 vec);
     
     /**
      * toggles if this source should be rendered relative to the screen or camera.
