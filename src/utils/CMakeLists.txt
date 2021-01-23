@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE fastmath.cpp log.cpp particle.cpp tween.cpp)
+target_sources(${PROJECT_NAME} PRIVATE fastmath.cpp log.cpp particle.cpp tween.cpp)

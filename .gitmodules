@@ -1,3 +1,18 @@
 [submodule "libs/boost-cmake"]
 	path = libs/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
+[submodule "libs/stb"]
+	path = libs/stb
+	url = https://github.com/nothings/stb
+[submodule "libs/openal-soft"]
+	path = libs/openal-soft
+	url = https://github.com/kcat/openal-soft
+[submodule "libs/glm"]
+	path = libs/glm
+	url = https://github.com/g-truc/glm
+[submodule "libs/glfw"]
+	path = libs/glfw
+	url = https://github.com/glfw/glfw
+[submodule "libs/freetype2"]
+	path = libs/freetype2
+	url = https://github.com/aseprite/freetype2

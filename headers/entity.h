@@ -2,9 +2,10 @@
 #include "hitbox.h"
 #include <unordered_map>
 #include <string>
-#include <bitset>
+#include <boost/dynamic_bitset.hpp>
 #include <iostream>
 #include <vector>
+
 #include "internal/entity.h"
 
 static int id_source;

@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE audio.cpp)
+target_sources(${PROJECT_NAME} PRIVATE audio.cpp)

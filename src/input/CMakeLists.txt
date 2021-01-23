@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE gamepad.cpp keyboard.cpp mouse.cpp)
+target_sources(${PROJECT_NAME} PRIVATE gamepad.cpp keyboard.cpp mouse.cpp)
