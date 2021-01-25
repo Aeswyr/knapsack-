@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 
 # set the project name and version
-        project(knapsackPP VERSION 0.2.1)
+        project(knapsackpp VERSION 0.2.1)
 
 
 # specify the C++ standard
@@ -34,13 +34,13 @@ endif()
         add_subdirectory(libs/boost-cmake)
 
 #include remaining dependencies
-        target_include_directories(${PROJECT_NAME} PUBLIC libs/glfw/include/)
-        target_include_directories(${PROJECT_NAME} PUBLIC libs/glad/include/)
-        target_include_directories(${PROJECT_NAME} PUBLIC libs/stb/)
-        target_include_directories(${PROJECT_NAME} PUBLIC libs/glm/)
-        # target_include_directories(${PROJECT_NAME} PUBLIC libs/openal-soft/)
+        target_include_directories(${PROJECT_NAME} PRIVATE libs/glfw/include/)
+        target_include_directories(${PROJECT_NAME} PRIVATE libs/glad/include/)
+        target_include_directories(${PROJECT_NAME} PRIVATE libs/stb/)
+        target_include_directories(${PROJECT_NAME} PRIVATE libs/glm/)
+        # target_include_directories(${PROJECT_NAME} PRIVATE libs/openal-soft/)
 
 # add source files and link
         add_subdirectory(src/)
-        target_include_directories(${PROJECT_NAME} PUBLIC headers/)
+        target_include_directories(${PROJECT_NAME} PUBLIC include/)
         target_link_libraries(${PROJECT_NAME} Boost::boost Boost::thread glfw)

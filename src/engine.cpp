@@ -16,7 +16,7 @@ unsigned int ENGINE_UPS = 0, ENGINE_FPS = 0, ENGINE_MS = 0;
 
 static bool running = false;
 static unsigned int fps, ups;
-static unsigned int avgu;
+static double avgu;
 static boost::thread* eThread;
 
 static void checkEvents() {
@@ -58,10 +58,10 @@ int update() {
 
             if ((pdel = glfwGetTime() - lastp) >= deltap) {
                 sfx::clean();
-                ENGINE_FPS = (int)(fps * ((float)deltap / pdel));
-                ENGINE_UPS = (int)(ups * ((float)deltap / pdel));
-                ENGINE_MS = (avgu / ups);
-                flog::out << pdel << "ms since last update" << "\n\tFPS: " << ENGINE_FPS
+                ENGINE_FPS = (int)(fps * deltap / pdel);
+                ENGINE_UPS = (int)(ups * deltap / pdel);
+                ENGINE_MS = (avgu * 1000.000 / ups);
+                flog::out << pdel * 1.000 << "s since last update" << "\n\tFPS: " << ENGINE_FPS
                  << "\n\tUPS: " << ENGINE_UPS << "\n\tAvg utime: " << ENGINE_MS << "ms" << flog::endl;
 
                 ups = 0;
