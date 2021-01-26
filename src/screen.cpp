@@ -1,8 +1,9 @@
-#include <SDL.h>
-#include <iostream>
-#include <SDL_ttf.h>
+#include <glad/glad.h> 
+#include <GLFW/glfw3.h>
+
 #include "log.h"
 #include "engine.h"
+#include "internal/eventpump.h"
 
 int SCREEN_WIDTH = 1200;
 int SCREEN_HEIGHT = 675;
@@ -11,47 +12,7 @@ int GAME_WIDTH = 1200 / GAMESCALE_X;
 int GAME_HEIGHT = 675 / GAMESCALE_Y;
 static float localGScale = 1, localTScale = 1;
 
-static SDL_Window* window = NULL;
-static SDL_Renderer* renderer = NULL;
-
-bool initWindow() {
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        flog::out << flog::err << "SDL failed to initialize. Error: \n" << SDL_GetError() << flog::endl;
-        return false;
-    } else {
-        if (TTF_Init() == -1) {
-            flog::out << flog::err << "SDL_TTF failed to initialize. Error: \n" << SDL_GetError() << flog::endl;
-            return false;
-        }
-
-        window = SDL_CreateWindow("Wizart Gaem", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
-        if (window == NULL) {
-            flog::out << flog::err << "Window creation failed. Error: \n" << SDL_GetError() << flog::endl;
-        } else {
-            renderer = SDL_CreateRenderer(window, -1, 0);
-            if (renderer == NULL) {
-                flog::out << flog::err << "Failed to create renderer" << SDL_GetError() << flog::endl;
-                return false;
-            }
-        }
-
-    }
-    return true;
-}
-
-void closeWindow() {
-	SDL_DestroyRenderer(renderer);
-    renderer = NULL;
-
-	SDL_DestroyWindow(window);
-	window = NULL;
-
-	SDL_Quit();
-}
-
-SDL_Renderer* getRenderer() {
-    return renderer;
-}
+static GLFWwindow* window = NULL;
 
 static void updateScale() {
     GAMESCALE_X = localGScale * SCREEN_WIDTH / 1200.0;
@@ -64,32 +25,64 @@ static void updateScale() {
     GAME_HEIGHT = SCREEN_HEIGHT / GAMESCALE_Y;
 }
 
-void parseWindowEvent(SDL_WindowEvent e) {
-    switch (e.event)
+static void linkInputCallbacks() {
+    glfwSetKeyCallback(window, key::keyevent);
+    glfwSetCursorPosCallback(window, mouse::moveevent);
+    glfwSetMouseButtonCallback(window, mouse::keyevent);
+}
+
+static void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    SCREEN_WIDTH = width;
+    SCREEN_HEIGHT = height;
+    updateScale();
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+bool initWindow(int w, int h, const char* name) {
+
+    SCREEN_WIDTH = w;
+    SCREEN_HEIGHT = h;
+    updateScale();
+
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    window = glfwCreateWindow(w, h, name, NULL, NULL);
+    if (window == NULL)
     {
-        case SDL_WINDOWEVENT_RESIZED:
-            SDL_GetRendererOutputSize(renderer, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-            updateScale();
-            break;
-        case SDL_WINDOWEVENT_SIZE_CHANGED:
-            SDL_GetRendererOutputSize(renderer, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-            updateScale();
-            break;
-        case SDL_WINDOWEVENT_RESTORED:
-            SDL_GetRendererOutputSize(renderer, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-            updateScale();
-            break;
-        case SDL_WINDOWEVENT_MINIMIZED:
-            SDL_GetRendererOutputSize(renderer, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-            updateScale();
-            break;
-        case SDL_WINDOWEVENT_MAXIMIZED:
-            SDL_GetRendererOutputSize(renderer, &SCREEN_WIDTH, &SCREEN_HEIGHT);
-            updateScale();
-            break;
-    default:
-        break;
+        flog::out << flog::err << "failed to create GLFW window" << flog::endl;
+        glfwTerminate();
+        return -1;
     }
+    glfwMakeContextCurrent(window);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        flog::out << flog::err << "Failed to initialize GLAD" << flog::endl;
+        return -1;
+    }
+
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
+
+    linkInputCallbacks();
+
+    return true;
+}
+
+void closeWindow() {
+	glfwDestroyWindow(window);
+	window = NULL;
+
+	glfwTerminate();
+}
+
+GLFWwindow* getWindow() {
+    return window;
 }
 
 void engine::setGameScale(float gamescale) {

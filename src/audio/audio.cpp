@@ -38,34 +38,34 @@ void imp::importAudio(std::string path) {
 }
 
 void Mus::lazyload() {
-    data = Mix_LoadMUS(path.c_str());
+    //data = Mix_LoadMUS(path.c_str());
     flog::out << "lazyloaded music at " << path << flog::endl;
 }
 
 void Mus::unload() {
-    Mix_FreeMusic(data);
+    //Mix_FreeMusic(data);
     flog::out << "unloaded music at " << path << flog::endl;
 }
 
 int Mus::play(int loops) {
     ping();
-    Mix_PlayMusic(data, loops);
+    //Mix_PlayMusic(data, loops);
     return -2;
 }
 
 void Sfx::lazyload() {
-    data = Mix_LoadWAV(path.c_str());
+    //data = Mix_LoadWAV(path.c_str());
     flog::out << "lazyloaded sound at " << path << flog::endl;
 }
 
 void Sfx::unload() {
-    Mix_FreeChunk(data);
+    //Mix_FreeChunk(data);
     flog::out << "unloaded sound at " << path << flog::endl;
 }
 
 int Sfx::play(int loops) {
     ping();
-    return Mix_PlayChannel(-1, data, loops);
+    return 0;//Mix_PlayChannel(-1, data, loops);
 }
 
 void Mix::update() {
@@ -130,24 +130,25 @@ void Sound::play(int loops) {
 
 int Sound::setVolume(int vol) {
     if (channel == -2)
-        return Mix_VolumeMusic(vol);
+        return 0; //Mix_VolumeMusic(vol);
     else
-        return Mix_Volume(channel, vol);
+        return 0; //Mix_Volume(channel, vol);
 }
 
 void Sound::stop() {
     if (channel == -2)
-        Mix_HaltMusic();
+        ; //Mix_HaltMusic();
     else
-        Mix_HaltChannel(channel);
+        ; //Mix_HaltChannel(channel);
 }
 
 void sfx::init() {
     int audio_rate = 44100;
-    Uint16 audio_format = AUDIO_S16; /* 16-bit stereo */
+    //Uint16 audio_format = AUDIO_S16; /* 16-bit stereo */
     int audio_channels = 8;
     int audio_buffers = 4096;
 
+    /*
     if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) < 0) {
         flog::out << flog::err << "Unable to open audio!\n" << flog::endl;
         exit(1);
@@ -155,4 +156,5 @@ void sfx::init() {
 
     if(Mix_Init(MIX_INIT_MOD) != MIX_INIT_MOD)
         flog::out << flog::err << "error initializing sdl mixer" << flog::endl;
+    */
 }

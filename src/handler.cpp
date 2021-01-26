@@ -19,11 +19,9 @@ static std::vector<Sound*> engine_sounds;
 static std::vector<Sound*> scene_sounds;
 
 static std::unordered_map<std::string, AudioSource*>* audio_sources = new std::unordered_map<std::string, AudioSource*>();
-static Text fpsdisplay("N/A", 16, {255, 255, 255}), upsdisplay("N/A", 16, {255, 255, 255}), msdisplay("N/A", 16, {255, 255, 255});
+static Text fpsdisplay("N/A", 16, {1, 1, 1, 1}), upsdisplay("N/A", 16, {1, 1, 1, 1}), msdisplay("N/A", 16, {1, 1, 1, 1});
 
 void hnd::render() {
-    if (activeScene != nullptr)
-        activeScene->render();
     particle::render();
     entities::render();
     if (ENGINE_DEV_MODE) {
@@ -36,11 +34,9 @@ void hnd::render() {
 void hnd::update() {
     particle::update();
     entities::update();
-    if (activeScene != nullptr)
-        activeScene->update();
     camera::update();
     key::update();
-    gamepad::update();
+    //gamepad::update();
 
     if (ENGINE_DEV_MODE) {
         std::string text = "FPS: ";

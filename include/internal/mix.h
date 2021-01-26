@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL_mixer.h>
+//#include <SDL_mixer.h>
 #include <string>
 
 /**
@@ -41,7 +41,7 @@ protected:
     void lazyload();
 public:
     Mus(std::string path) : Mix(path) {}
-    Mix_Music* data = nullptr;
+    //Mix_Music* data = nullptr;
 
     /**
     * 
@@ -59,7 +59,7 @@ protected:
     void lazyload();
 public:
     Sfx(std::string path) : Mix(path) {}
-    Mix_Chunk* data = nullptr;
+    //Mix_Chunk* data = nullptr;
 
     /**
     * 

@@ -1,5 +1,4 @@
 #pragma once
-#include "SDL.h"
 
 /**
  * struct representing every object that can be drawn to the screen
@@ -15,7 +14,7 @@ public:
      * int y    -   y position to draw at
      * int z    -   z layer for sorting
      */ 
-    virtual void render(int x, int y, int z, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
+    virtual void render(Vector3 pos, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
 
     /**
      * Draws the given renderable using the information contained in
@@ -24,7 +23,7 @@ public:
      * Alignment* align -   a pointer to the alignment to reference
      * int z            -   z layer for sorting
      */ 
-    virtual void render(Alignment* align, int z, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
+    virtual void render(Alignment* align, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
 
     /**
      * Draws the given renderable using the information contained in
@@ -38,7 +37,7 @@ public:
      *                      alignment y
      * int z            -   z layer for sorting
      */  
-    virtual void render(Alignment* align, int xoff, int yoff, int z, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
+    virtual void render(Alignment* align, int xoff, int yoff, float scalex = GAMESCALE_X, float scaley = GAMESCALE_Y) = 0;
 
     virtual ~Renderable() = 0;
 };
@@ -52,10 +51,10 @@ namespace render {
      * int y            -   y position to draw at (top left corner)
      * int w            -   width of the rectangle
      * int h            -   height of the rectangle
-     * SDL_Color color  -   {r, g, b} color for the rectangle
+     * Vector3 color    -   {r, g, b} color for the rectangle
      * int z            -   z layer for sorting
      */ 
-    void drawRect(int x, int y, int w, int h, SDL_Color color, int z);
+    void drawRect(Vector3 pos, int w, int h, Vector4 color);
 
     /**
      * draws an filled rectangle
@@ -64,10 +63,10 @@ namespace render {
      * int y            -   y position to draw at (top left corner)
      * int w            -   width of the rectangle
      * int h            -   height of the rectangle
-     * SDL_Color color  -   {r, g, b} color for the rectangle
+     * Vector3 color    -   {r, g, b} color for the rectangle
      * int z            -   z layer for sorting
      */  
-    void fillRect(int x, int y, int w, int h, SDL_Color color, int z);
+    void fillRect(Vector3 pos, int w, int h, Vector4 color);
 
     /**
      * draws a filled rectangle with a different colored outline
@@ -76,9 +75,9 @@ namespace render {
      * int y            -   y position to draw at (top left corner)
      * int w            -   width of the rectangle
      * int h            -   height of the rectangle
-     * SDL_Color color1 -   {r, g, b} color for the rectangle fill
-     * SDL_Color color2 -   {r, g, b} color for the rectangle outline
+     * Vector3 color1   -   {r, g, b} color for the rectangle fill
+     * Vector3 color2   -   {r, g, b} color for the rectangle outline
      * int z            -   z layer for sorting
      */ 
-    void outlineRect(int x, int y, int w, int h, SDL_Color color1, SDL_Color color2, int z);
+    void outlineRect(Vector3 pos, int w, int h, Vector4 color1, Vector4 color2);
 }

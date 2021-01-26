@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE entity.cpp entitymanager.cpp hitbox.cpp)
+target_sources(${PROJECT_NAME} PRIVATE entity.cpp entitymanager.cpp hitbox.cpp)

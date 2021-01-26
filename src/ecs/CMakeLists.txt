@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE component.cpp)
+target_sources(${PROJECT_NAME} PRIVATE component.cpp)

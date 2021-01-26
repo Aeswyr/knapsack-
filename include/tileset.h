@@ -8,7 +8,7 @@ private:
 public:
     Tileset() {};
     Tileset(std::string name, int tilesize);
-    void render(int x, int y, Vector3 map);
+    void render(float x, float y, Vector3 map);
     ~Tileset();
 };
 

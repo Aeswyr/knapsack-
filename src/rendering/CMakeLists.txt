@@ -1,1 +1,1 @@
-target_sources(knapsackpp PRIVATE camera.cpp renderrequest.cpp sprite.cpp tileset.cpp)
+target_sources(${PROJECT_NAME} PRIVATE camera.cpp sprite.cpp tileset.cpp)

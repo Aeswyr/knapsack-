@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <SDL.h>
 
 struct Texture {
 private:
@@ -12,8 +11,8 @@ private:
     
 public:
 	int w, h, frames, delta;
-	SDL_Texture* sheet;
-	SDL_Rect** clips;
+	unsigned int sheetTextureId = 0;
+	float* clips;
 
 	Texture(std::string path) : path(path) {
         loaded = 0;

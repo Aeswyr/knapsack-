@@ -4,9 +4,9 @@
 
 static int X = 0, Y = 0;
 
-void mouse::move(SDL_MouseMotionEvent e) {
-    X = e.x;
-    Y = e.y;
+void mouse::moveevent(GLFWwindow* window, double xpos, double ypos) {
+    X = xpos;
+    Y = ypos;
 }
 
 int mouse::x() {

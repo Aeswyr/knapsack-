@@ -47,22 +47,20 @@ void particle::flush() {
 
 
 
-ParticleSource::ParticleSource(int size, int z, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector2*, int t)) {
+ParticleSource::ParticleSource(int size, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector3*, int t)) {
     this->size = size;
     this->loops = 0;
     this->sprite = sprite;
     this->lifetime = lifetime;
     this->behavior = behavior;
-    this->z = z;
 }
 
-ParticleSource::ParticleSource(int size, int z, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector2*, int t), int loops) {
+ParticleSource::ParticleSource(int size, Renderable* sprite, int (*lifetime)(), void (*behavior)(Vector3*, int t), int loops) {
     this->size = size;
     this->loops = loops;
     this->sprite = sprite;
     this->lifetime = lifetime;
     this->behavior = behavior;
-    this->z = z;
 }
 
 void ParticleSource::update() {
@@ -91,12 +89,12 @@ void ParticleSource::render() {
     if (offset)
         for (int i = 0; i < size; i++) {
             if (particles[i].lifetime)
-                sprite->render(&particles[i].align, camera::x, camera::y, z);
+                sprite->render(&particles[i].align, camera::x, camera::y);
         }
     else
         for (int i = 0; i < size; i++) {
             if (particles[i].lifetime)
-                sprite->render(&particles[i].align, z);
+                sprite->render(&particles[i].align);
         }
 }
 
@@ -107,7 +105,7 @@ void ParticleSource::bind(Alignment* align) {
     falign = false;
 }
 
-void ParticleSource::bind(Vector2 vec) {
+void ParticleSource::bind(Vector3 vec) {
     if (falign)
         delete(align); 
     align = new Alignment();
@@ -134,9 +132,8 @@ void ParticleSource::init() {
             particles[i].align.pos.y = 0;
             
             particles[i].align.theta = 0;
-            *particles[i].align.x_internal = 0;
-            *particles[i].align.y_internal = 0;
-            particles[i].align.flip = SDL_FLIP_NONE;
+            particles[i].align.center.x = 0;
+            particles[i].align.center.y = 0;
 
             particles[i].lifetime = lifetime();
         }
@@ -145,9 +142,8 @@ void ParticleSource::init() {
             particles[i].align.pos = align->pos;
 
             particles[i].align.theta = 0;
-            *particles[i].align.x_internal = 0;
-            *particles[i].align.y_internal = 0;
-            particles[i].align.flip = SDL_FLIP_NONE;
+            particles[i].align.center.x = 0;
+            particles[i].align.center.y = 0;
 
             particles[i].lifetime = lifetime();
         }

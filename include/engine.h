@@ -11,7 +11,7 @@ namespace engine {
      * 
      * void (*initfunc)()   -   the function to run once the engine is started
      */ 
-    void start(void (*initfunc)());
+    void start(int w, int h, const char* name, void (*initfunc)());
 
     /**
      * Stops the engine and cleans up all memory associated with the engine and renderer

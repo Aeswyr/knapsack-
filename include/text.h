@@ -8,9 +8,9 @@ private:
     int w, h;
     std::string text;
     int size;
-    SDL_Color color;
+    Vector4 color;
     bool u_flag = false;
-    SDL_Texture* texture = nullptr;
+    void* texture = nullptr;
     void refresh();
 public:
 
@@ -21,7 +21,7 @@ public:
      * int size         -   the font size for the text
      * SDL_Color color  -   the {r, g, b} color of the text
      */ 
-    Text(std::string text, int size, SDL_Color color);
+    Text(std::string text, int size, Vector4 color);
 
     ~Text();
 
@@ -48,7 +48,7 @@ public:
      * 
      * SDL_Color color  -   the {r, g, b} color to draw the text as
      */ 
-    void update(SDL_Color color);
+    void update(Vector4 color);
 
      /**
      * Draws the given text at the specified x and y coordinates,
@@ -58,7 +58,7 @@ public:
      * int y    -   y position to draw at
      * int z    -   z layer for sorting
      */ 
-    void render(int x, int y, int z, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
+    void render(Vector3 pos, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
 
     /**
      * Draws the given text using the information contained in
@@ -67,7 +67,7 @@ public:
      * Alignment* align -   a pointer to the alignment to reference
      * int z            -   z layer for sorting
      */ 
-    void render(Alignment* align, int z, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
+    void render(Alignment* align, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
 
     /**
      * Draws the given text using the information contained in
@@ -81,5 +81,5 @@ public:
      *                      alignment y
      * int z            -   z layer for sorting
      */ 
-    void render(Alignment* align, int xoff, int yoff, int z, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
+    void render(Alignment* align, int xoff, int yoff, float scalex = TEXTSCALE_X, float scaley = TEXTSCALE_Y);
 }; 

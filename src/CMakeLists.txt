@@ -6,4 +6,4 @@ add_subdirectory(input/)
 add_subdirectory(rendering/)
 add_subdirectory(utils/)
 
-target_sources(knapsackpp PRIVATE engine.cpp handler.cpp metaparse.cpp screen.cpp)
+target_sources(${PROJECT_NAME} PRIVATE engine.cpp handler.cpp metaparse.cpp screen.cpp)

@@ -9,12 +9,6 @@ static std::vector<Entity*> to_add;
 static std::vector<Entity*> to_remove;
 
 void entities::update() {
-    for (unsigned int i = 0; i < all_entity.size(); i++) {
-        all_entity[i]->tick();
-        if (all_entity[i]->isActive())
-            all_entity[i]->update();
-    }
-
     if (to_add.size()) {
         all_entity.insert(all_entity.end(), to_add.begin(), to_add.end());
         to_add.clear();
@@ -31,15 +25,6 @@ void entities::update() {
 }
 
 void entities::render() {
-    if (!ENGINE_DEV_MODE)
-        for (unsigned int i = 0; i < all_entity.size(); i++)  {
-            all_entity[i]->render();
-        }
-    else
-        for (unsigned int i = 0; i < all_entity.size(); i++)  {
-            all_entity[i]->render();
-            all_entity[i]->renderDevMode();
-        }
         
 }
 

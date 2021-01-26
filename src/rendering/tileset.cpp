@@ -5,8 +5,8 @@ Tileset::Tileset(std::string name, int tilesize) {
     this->tilesize = tilesize;
 }
 
-void Tileset::render(int x, int y, Vector3 map) {
-    sprite->render(x, y, map.x, map.y, tilesize, tilesize, map.z);
+void Tileset::render(float x, float y, Vector3 map) {
+    sprite->render({x, y, map.z}, map.x, map.y, tilesize, tilesize);
 }
 
 Tileset::~Tileset() {

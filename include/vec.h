@@ -7,7 +7,7 @@ struct Vector2 {
     float x, y;
 
     Vector2() : x(0), y(0) {}
-    Vector2(int x, int y) : x(x), y(y) {}
+    Vector2(float x, float y) : x(x), y(y) {}
 
     Vector2 operator+(const Vector2& v) {
         Vector2 vec = *this;
@@ -43,7 +43,7 @@ struct Vector3 {
     float x, y, z;
 
     Vector3() : x(0), y(0), z(0) {}
-    Vector3(int x, int y, int z) : x(x), y(y), z(z) {}
+    Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 
     Vector3 operator+(const Vector2& v) {
         Vector3 vec = *this;
@@ -115,7 +115,7 @@ struct Vector4 {
     float x, y, z, w;
 
     Vector4() : x(0), y(0), z(0), w(0) {}
-    Vector4(int x, int y, int z, int w) : x(x), y(y), z(z), w(w) {}
+    Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
     Vector4 operator+(const Vector2& v) {
         Vector4 vec = *this;
