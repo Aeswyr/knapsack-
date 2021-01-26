@@ -1,0 +1,1 @@
+target_sources(knapsackpp PRIVATE gamepad.cpp keyboard.cpp mouse.cpp)

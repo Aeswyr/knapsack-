@@ -1,0 +1,12 @@
+CMakeCache.txt
+libs/boost/
+libs/glm/
+libs/glfw/
+libs/stb/
+libs/openal/
+libs/freetype/
+build/
+release/
+CMakeFiles/
+*.cmake
+**/Makefile
