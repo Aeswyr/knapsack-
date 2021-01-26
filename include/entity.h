@@ -8,92 +8,19 @@
 
 #include "internal/entity.h"
 
-static int id_source;
+static unsigned int id_source = 0;
 
 class Entity {
 private:
     std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
-    //std::bitset<CID_MAX> bitset;
-    std::unordered_map<std::string, Hitbox*> hitboxes;
-    int inactive = 0;
+    boost::dynamic_bitset<> validcomponents = boost::dynamic_bitset<>(CID_MAX);
 protected:
-    int id = ++id_source;
+    unsigned int id = ++id_source;
 
-    /**
-     * draws this entity's hitboxes to screen at a given offset
-     * 
-     * int xoff -   the x offset to subtract from the hitbox position
-     * int yoff -   the y offset to subtract from the hitbox position
-     */ 
-    void renderHitboxes(int xoff, int yoff);
 public:
     Entity();
 
-    /**
-     * Virtual method, when extending entity all game logic should be handled in this method
-     */ 
-    virtual void update() {}
-    
-    /**
-     * Internal method for all entities, handles engine-level logic for all entities. 
-     * DO NOT OVERRIDE
-     */ 
-    void tick();
-
-    /**
-     * Virtual method, when extending entity, all render calls should be handled in this method
-     */ 
-    virtual void render() {}
-
-    /**
-     * Only draws while in dev mode. By default, calls renderHitboxes
-     */ 
-    void renderDevMode();
-
     virtual ~Entity() = 0;
-
-    /**
-     * Gets a registerd hitbox from an entity
-     * 
-     * string name  -   The name of the hitbox to find
-     * returns      -   A pointer to the hitbox or if no hitbox exists under that name, null
-     */ 
-    Hitbox* hitbox(std::string name);
-
-    /**
-     * Creates and registers a new hitbox under a given name
-     * 
-     * string name  -   The name of the new hitbox
-     * returns      -   A pointer to the newly created hitbox
-     */ 
-    Hitbox* registerHitbox(std::string name);
-
-    /**
-     * Creates and registers a new hitbox under a given name
-     * 
-     * string name          -   The name of the new hitbox
-     * int w                -   The width of the hitbox
-     * int h                -   The height of the hitbox
-     * Alignment* alignment -   A pointer to an alignment representing this hitbox's position
-     * returns              -   A pointer to the newly created hitbox
-     */ 
-    Hitbox* registerHitbox(std::string name, int w, int h, Alignment* alignment);
-
-    /**
-     * returns true if this entity is being actively updated and false otherwise
-     */ 
-    bool isActive() {
-        return !inactive;
-    }
-
-    /**
-     * stops this entity from being updated for a given count
-     * 
-     * int ticks    -   the number of ticks to stop updating for
-     */ 
-    void pause(int ticks) {
-        inactive = ticks;
-    }
     
     /**
      * allocates memory for a new component on this entity and returns a pointer to that space,

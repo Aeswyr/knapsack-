@@ -81,6 +81,10 @@ void closeWindow() {
 	glfwTerminate();
 }
 
+GLFWwindow* getWindow() {
+    return window;
+}
+
 void engine::setGameScale(float gamescale) {
     localGScale = gamescale;
     updateScale();

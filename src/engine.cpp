@@ -87,7 +87,7 @@ int run() {
     double curr;
     double last = glfwGetTime();
     double delta = 1;
-	while (running) {
+	while (running && !glfwWindowShouldClose(getWindow())) {
         curr = glfwGetTime();
         checkEvents();
         render();

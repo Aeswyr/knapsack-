@@ -22,8 +22,6 @@ static std::unordered_map<std::string, AudioSource*>* audio_sources = new std::u
 static Text fpsdisplay("N/A", 16, {1, 1, 1, 1}), upsdisplay("N/A", 16, {1, 1, 1, 1}), msdisplay("N/A", 16, {1, 1, 1, 1});
 
 void hnd::render() {
-    if (activeScene != nullptr)
-        activeScene->render();
     particle::render();
     entities::render();
     if (ENGINE_DEV_MODE) {
@@ -36,8 +34,6 @@ void hnd::render() {
 void hnd::update() {
     particle::update();
     entities::update();
-    if (activeScene != nullptr)
-        activeScene->update();
     camera::update();
     key::update();
     //gamepad::update();

@@ -17,6 +17,8 @@ endif()
 
 # add the exported library
         add_library(${PROJECT_NAME} SHARED)
+        set(CMAKE_EXE_LINKER_FLAGS " -static")
+        target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++)
 
 # add dependency src
         add_subdirectory(libs/glm/)

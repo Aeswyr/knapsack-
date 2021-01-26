@@ -4,3 +4,4 @@ release/
 CMakeFiles/
 *.cmake
 **/Makefile
+.vscode/
