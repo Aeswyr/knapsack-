@@ -1,6 +1,7 @@
 #pragma once
-#include "sprite.h"
-#include "alignment.h"
+
+#include "knapsack/sprite.h"
+#include "knapsack/alignment.h"
 
 /**
  * structure representing a collection of identical particles

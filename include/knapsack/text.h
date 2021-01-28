@@ -1,7 +1,9 @@
 #pragma once
-#include "render.h"
-#include "alignment.h"
+
 #include <string>
+
+#include "knapsack/render.h"
+#include "knapsack/alignment.h"
 
 struct Text : public Renderable {
 private:

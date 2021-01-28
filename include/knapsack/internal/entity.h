@@ -1,4 +1,5 @@
 #pragma once
+
 extern unsigned int CID_MAX; // defined in component.cpp
 
 namespace INTERNAL_ONLY_COMPONENT {

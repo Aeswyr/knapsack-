@@ -1,17 +1,20 @@
-#include "handler.h"
-#include "internal/handler.h"
+#include "knapsack/handler.h"
+
 #include <vector>
-#include "internal/audio.h"
 #include <string>
 #include <unordered_map>
-#include "internal/eventpump.h"
-#include "internal/camera.h"
-#include "internal/entitymanager.h"
-#include "internal/particle.h"
-#include "globals.h"
-#include "sprite.h"
-#include "internal/globals.h"
-#include "text.h"
+
+#include <knapsack/internal/handler.h>
+#include <knapsack/internal/audio.h>
+#include <knapsack/internal/eventpump.h>
+#include <knapsack/internal/camera.h>
+#include <knapsack/internal/entitymanager.h>
+#include <knapsack/internal/particle.h>
+#include <knapsack/internal/globals.h>
+
+#include "knapsack/globals.h"
+#include "knapsack/sprite.h"
+#include "knapsack/text.h"
 
 static Scene* activeScene = nullptr;
 

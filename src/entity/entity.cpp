@@ -1,4 +1,4 @@
-#include "entity.h"
+#include "knapsack/entity.h"
 
 Entity::Entity() {
 

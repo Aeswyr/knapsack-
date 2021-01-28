@@ -1,9 +1,13 @@
+#include "knapsack/engine.h"
+#include <knapsack/internal/eventpump.h>
+
+#define GLFW_INCLUDE_NONE
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
+#undef GLFW_INCLUDE_NONE
 
-#include "log.h"
-#include "engine.h"
-#include "internal/eventpump.h"
+#include "knapsack/log.h"
+
 
 int SCREEN_WIDTH = 1200;
 int SCREEN_HEIGHT = 675;

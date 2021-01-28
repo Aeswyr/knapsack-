@@ -1,5 +1,7 @@
+#include "knapsack/component.h"
+
 #include <vector>
-#include <component.h>
-#include "internal/entity.h"
+
+#include <knapsack/internal/entity.h>
 
 unsigned int CID_MAX = 0;

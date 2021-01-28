@@ -1,5 +1,6 @@
+#include "knapsack/fastmath.h"
+
 #include <cmath>
-#include "fastmath.h"
 
 float cos(float dx, float dy) {
     return dx / sqrt(dx * dx + dy * dy);

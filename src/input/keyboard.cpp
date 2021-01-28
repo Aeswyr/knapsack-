@@ -1,5 +1,6 @@
-#include "internal/eventpump.h"
-#include "input.h"
+#include <knapsack/internal/eventpump.h>
+#include "knapsack/input.h"
+
 #include <string.h>
 #include <climits>
 

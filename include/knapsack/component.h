@@ -1,7 +1,9 @@
 #pragma once
-#include "internal/entity.h"
+
 #include <iostream>
 #include <vector>
+
+#include <knapsack/internal/entity.h>
 
 /**
  * A base struct all components must extend. Components are collections of

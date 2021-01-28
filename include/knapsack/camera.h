@@ -1,5 +1,6 @@
 #pragma once
-#include "alignment.h"
+
+#include "knapsack/alignment.h"
 
 /**
  * contains methods to attach alignments to the camera, as well as the camera x and y offsets

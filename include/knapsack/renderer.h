@@ -1,4 +1,6 @@
-#include "entity.h"
+#pragma once
+
+#include "knapsack/entity.h"
 
 struct Renderer {
 
