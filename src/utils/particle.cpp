@@ -1,8 +1,11 @@
-#include "particle.h"
+#include "knapsack/particle.h"
+
 #include <vector>
 #include <algorithm>
-#include "internal/particle.h"
-#include "camera.h"
+
+#include <knapsack/internal/particle.h>
+
+#include "knapsack/camera.h"
 
 static std::vector<ParticleSource*> all_particle;
 static std::vector<ParticleSource*> to_add;

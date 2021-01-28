@@ -1,4 +1,4 @@
-#include "tileset.h"
+#include "knapsack/tileset.h"
 
 Tileset::Tileset(std::string name, int tilesize) {
     sprite = new Sprite(name);

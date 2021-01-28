@@ -1,8 +1,11 @@
-#include "internal/entitymanager.h"
-#include "entity.h"
+#include "knapsack/entity.h"
+
 #include <vector>
 #include <algorithm>
-#include "globals.h"
+
+#include <knapsack/internal/entitymanager.h>
+
+#include "knapsack/globals.h"
 
 static std::vector<Entity*> all_entity;
 static std::vector<Entity*> to_add;

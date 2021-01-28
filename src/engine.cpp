@@ -1,13 +1,18 @@
-#include "internal/screen.h"
-#include <boost/thread.hpp>
-#include "log.h"
-#include "engine.h"
-#include <GLFW/glfw3.h>
-#include "internal/resource.h"
-#include "internal/handler.h"
-#include "internal/eventpump.h"
+#include "knapsack/engine.h"
+
 #include <climits>
 
+#include <boost/thread.hpp>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+#undef GLFW_INCLUDE_NONE
+
+#include <knapsack/internal/screen.h>
+#include <knapsack/internal/resource.h>
+#include <knapsack/internal/handler.h>
+#include <knapsack/internal/eventpump.h>
+
+#include "knapsack/log.h"
 
 int ENGINE_Z = INT_MAX;
 unsigned long long ENGINE_TICK = 0;

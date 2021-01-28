@@ -1,5 +1,9 @@
 #pragma once
 
+#include "knapsack/globals.h"
+#include "knapsack/vector.h"
+#include "knapsack/alignment.h"
+
 /**
  * struct representing every object that can be drawn to the screen
  */ 

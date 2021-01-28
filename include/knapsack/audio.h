@@ -1,7 +1,8 @@
 #pragma once
-//#include <SDL_mixer.h>
+
 #include <string>
-#include <internal/mix.h>
+
+#include <knapsack/internal/mix.h>
 
 const int LOOP_INFINITELY = -1;
 

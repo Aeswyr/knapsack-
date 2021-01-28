@@ -1,9 +1,12 @@
 #pragma once
-#include "alignment.h"
-#include "globals.h"
+
 #include <string>
-#include <internal/renderable.h>
-#include "render.h"
+
+#include <knapsack/internal/renderable.h>
+
+#include "knapsack/render.h"
+#include "knapsack/alignment.h"
+#include "knapsack/globals.h"
 
 struct Sprite : public Renderable {
 private:

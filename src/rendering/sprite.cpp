@@ -1,14 +1,16 @@
-#include "internal/screen.h"
-#include "internal/import.h"
-#include "sprite.h"
-#include "text.h"
+#include "knapsack/sprite.h"
+#include "knapsack/text.h"
+
 #include <unordered_map>
-#include "internal/resource.h"
-#include "log.h"
 #include <string>
-#include "globals.h"
 #include <vector>
 #include <algorithm>
+
+#include <knapsack/internal/import.h>
+#include <knapsack/internal/resource.h>
+
+#include "knapsack/globals.h"
+#include "knapsack/log.h"
 
 static unsigned long long RenderTime;
 static std::unordered_map<std::string, Texture*>  spriteMap;

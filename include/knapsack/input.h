@@ -1,5 +1,6 @@
 #pragma once
-#include "vec.h"
+
+#include "knapsack/vector.h"
 
 /**
  * struct representing a single connected gamepad/controller

@@ -1,11 +1,13 @@
 #pragma once
-#include "hitbox.h"
+
 #include <unordered_map>
 #include <string>
-#include <boost/dynamic_bitset.hpp>
 #include <iostream>
 #include <vector>
 
+#include <boost/dynamic_bitset.hpp>
+
+#include "knapsack/hitbox.h"
 #include "internal/entity.h"
 
 static unsigned int id_source = 0;

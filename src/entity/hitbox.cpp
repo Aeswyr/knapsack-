@@ -1,6 +1,8 @@
-#include "hitbox.h"
-#include "sprite.h"
-#include "internal/globals.h"
+#include "knapsack/hitbox.h"
+
+#include <knapsack/internal/globals.h>
+
+#include "knapsack/sprite.h"
 
 bool hitbox::collision(Hitbox* a1, Hitbox* a2) {
     if (!a1 || !a2)
