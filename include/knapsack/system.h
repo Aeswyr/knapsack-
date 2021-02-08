@@ -9,3 +9,15 @@ class System {
 public:
     virtual void run() = 0;
 };
+
+namespace ecs {
+    namespace system {
+        /**
+         * registers a target system with this scene, causing it to start
+         * running. Systems execute in the order they are registered
+         * 
+         * System system    -   the system to register
+         */ 
+        void add(System* system);
+    };
+};

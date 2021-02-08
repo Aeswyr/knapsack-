@@ -1,1 +1,1 @@
-target_sources(${PROJECT_NAME} PRIVATE handler.cpp scene.cpp)
+target_sources(${PROJECT_NAME} PRIVATE handler.cpp)

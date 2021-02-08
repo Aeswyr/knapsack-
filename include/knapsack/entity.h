@@ -4,25 +4,63 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include <boost/dynamic_bitset.hpp>
 
-#include "knapsack/hitbox.h"
-#include "internal/entity.h"
+#include "knapsack/internal/entity.h"
 
-static unsigned int id_source = 0;
+#include "knapsack/component.h"
+
+class Entity;
+
+ /**
+ * contains a number of functions related to operations on the list of all active entities
+ */ 
+namespace ecs {
+    namespace entity {
+        /**
+         * creates and returns a new entity
+         * 
+         * returns      -   A reference to the entity created
+         */ 
+        Entity& create();
+
+        /**
+         * fetches an entity reference based on the provided entity
+         * 
+         * EntityID id  -   The id of the entity to fetch
+         * returns      -   A reference to the entity corresponding to the
+         *                  given ID or null if no entity is found
+         */ 
+        Entity& get(EntityID id);
+
+        /**
+         * removes an entity from the list of active entities
+         * 
+         * EntityID id    -   The id of the entity to remove
+         */ 
+        void del(EntityID id);
+
+        /**
+         * clears all existing entities
+         */ 
+        void clear();
+    };
+};
+
+
+static EntityID id_source;
 
 class Entity {
 private:
     std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
     boost::dynamic_bitset<> validcomponents = boost::dynamic_bitset<>(CID_MAX);
-protected:
-    unsigned int id = ++id_source;
-
 public:
+    const EntityID ID = ++id_source;
     Entity();
 
-    virtual ~Entity() = 0;
+    ~Entity();
     
     /**
      * allocates memory for a new component on this entity and returns a pointer to that space,
@@ -31,8 +69,15 @@ public:
      * 
      * typename T    -   the type of the new component
      */ 
-    template <typename T> T* set() {
-        return nullptr; //TODO
+    template <typename T> T& set() {
+        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()])
+            return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+        validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
+        componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = Component<T>::componentList.size();
+        typename Component<T>::ComponentDataPair comppair;
+        comppair.ownerID = ID;
+        Component<T>::componentList.push_back(comppair);
+        return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
     }
 
     /**
@@ -42,7 +87,17 @@ public:
      * returns      -   true if this entity has a given component, and false otherwise
      */ 
     template <typename T> bool has() {
-        return false; //TODO
+        return validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()];
+    }
+
+    /**
+     * checks if this entity has a given component
+     * 
+     * unsigned int T   -   the component id to check for
+     * returns          -   true if this entity has a given component, and false otherwise
+     */ 
+    bool has(unsigned int i) {
+        return validcomponents[i];
     }
 
     /**
@@ -51,8 +106,11 @@ public:
      * typename T   -   the type of the component to get
      * returns      -   a pointer to the component or null if the entity does not have the given component
      */ 
-    template <typename T> T* get() {
-        return nullptr; //TODO
+    template <typename T> T& get() {
+        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
+            return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+        }
+        return nullptr;
     }
 
     /**
@@ -61,39 +119,16 @@ public:
      * typenname T  -   the type of the component to remove
      */ 
     template <typename T> void del() {
-        return; //TODO
+        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
+            validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 0;
+            unsigned short int pos = componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()];
+            std::swap(Component<T>::componentList[pos], Component<T>::componentList[Component<T>::componentList.size() - 1]);
+            Component<T>::componentList.pop_back();
+            if (Component<T>::componentList.size() > 0) {
+                ecs::entity::get(Component<T>::componentList[pos].ownerID).componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = pos;
+            }
+        }
     }
-};
-
- /**
- * contains a number of functions related to operations on the list of all active entities
- */ 
-namespace entities {
-    /**
-     * gets a list of all active entities
-     * 
-     * returns  -   a pointer to the vector containing all entities
-     */ 
-    std::vector<Entity*>* all();
-
-    /**
-     * adds a new entity to the list of active entities
-     * 
-     * Entity* e    -   a pointer to the new entity to add
-     */ 
-    void add(Entity* e);
-
-    /**
-     * removes an entity from the list of active entities
-     * 
-     * Entity* e    -   a pointer to the new entity to remove
-     */ 
-    void remove(Entity* e);
-
-    /**
-     * clears the list of active entities completely
-     */ 
-    void clear();
 };
 
 

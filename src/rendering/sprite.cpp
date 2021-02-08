@@ -17,7 +17,7 @@ static std::unordered_map<std::string, Texture*>  spriteMap;
 
 Texture* getTexture(std::string name) {
 	if (spriteMap.find(name) == spriteMap.end()) {
-        flog::out << flog::err << name << " is not present in the sprite map" << flog::endl;
+        out::log << out::err << name << " is not present in the sprite map" << out::endl;
         exit(1);
     }
 	Texture* ptr = spriteMap[name];
@@ -150,7 +150,7 @@ void Texture::update() {
 
 void Texture::unload() {
 
-	flog::out << "unloaded sprite at " << path << flog::endl;
+	out::log << "unloaded sprite at " << path << out::endl;
 }
 
 void Texture::ping() {

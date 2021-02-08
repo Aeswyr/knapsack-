@@ -33,7 +33,7 @@ protected:
 public:
     struct ComponentDataPair {
         T component;
-        unsigned short component_index;
+        unsigned int ownerID;
     };
     static std::vector<ComponentDataPair> componentList;
     

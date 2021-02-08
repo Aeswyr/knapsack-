@@ -45,17 +45,17 @@ public:
 /**
  * contains a number of values for outputting runtime logs to console and file
  */ 
-namespace flog {
+namespace out {
     
     /**
-     * use log::out to output to just the console. Format is log::out << data << data << ...;
+     * use out::log to output to just the console. Format is log::out << data << data << ...;
      */ 
-    extern EngineLog out;
+    extern EngineLog log;
 
     /**
-     * use log::fout to output to console and a file. Format is log::fout << data << data << ...;
+     * use out::flog to output to console and a file. Format is log::fout << data << data << ...;
      */ 
-    extern EngineLog fout;
+    extern EngineLog flog;
 
      /**
      * use << log::warn to trigger a warning output to the console. end the warning with log::endl

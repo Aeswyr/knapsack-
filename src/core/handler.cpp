@@ -1,4 +1,5 @@
 #include "knapsack/handler.h"
+#include "knapsack/scene.h"
 
 #include <vector>
 #include <string>
@@ -34,12 +35,17 @@ void hnd::render() {
     }
 }
 
+std::vector<System*> systems;
 void hnd::update() {
     particle::update();
     entities::update();
     camera::update();
     key::update();
     //gamepad::update();
+
+    
+    for(auto& sys : systems)
+        sys->run();
 
     if (ENGINE_DEV_MODE) {
         std::string text = "FPS: ";
@@ -85,3 +91,9 @@ AudioSource* engine::getAudioSource(std::string name) {
     }
     return source;
 }
+
+
+void ecs::system::add(System* system) {
+    systems.push_back(system);
+}
+

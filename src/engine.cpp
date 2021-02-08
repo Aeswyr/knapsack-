@@ -40,7 +40,7 @@ int update() {
 
     double lastu = glfwGetTime();
     double lastp = glfwGetTime();
-    flog::out << flog::alert << "Starting game" << flog::endl;
+    out::log << out::alert << "Starting game" << out::endl;
 
     double startu = 0;
     double pdel = 0;
@@ -66,8 +66,8 @@ int update() {
                 ENGINE_FPS = (int)(fps * deltap / pdel);
                 ENGINE_UPS = (int)(ups * deltap / pdel);
                 ENGINE_MS = (avgu * 1000.000 / ups);
-                flog::out << pdel * 1.000 << "s since last update" << "\n\tFPS: " << ENGINE_FPS
-                 << "\n\tUPS: " << ENGINE_UPS << "\n\tAvg utime: " << ENGINE_MS << "ms" << flog::endl;
+                out::log << pdel * 1.000 << "s since last update" << "\n\tFPS: " << ENGINE_FPS
+                 << "\n\tUPS: " << ENGINE_UPS << "\n\tAvg utime: " << ENGINE_MS << "ms" << out::endl;
 
                 ups = 0;
                 fps = 0;
@@ -106,7 +106,7 @@ int run() {
 
 void engine::start(int w, int h, const char* name, void (*initfunc)()) {
     if (!initWindow(w, h, name)) {
-        flog::out << flog::err << "Window initialization failed" << flog::endl;
+        out::log << out::err << "Window initialization failed" << out::endl;
         return;
     }
     //gamepad::locateControllers();
@@ -120,7 +120,7 @@ void engine::start(int w, int h, const char* name, void (*initfunc)()) {
 }
 
 void engine::stop() {
-    flog::out << flog::alert << "Closing game" << flog::endl;
+    out::log << out::alert << "Closing game" << out::endl;
     running = false;
     int threadReturn;
     eThread->join();
