@@ -1,4 +1,5 @@
-#include <knapsack/internal/audio.h>
+#include "knapsack/internal/audio.h"
+#include "knapsack/audio.h"
 
 #include <string>
 #include <unordered_map>
@@ -6,8 +7,8 @@
 #include <knapsack/internal/import.h>
 #include <knapsack/internal/resource.h>
 
-#include "knapsack/handler.h"
-#include "knapsack/log.h"
+#include <knapsack/handler.h>
+#include <knapsack/log.h>
 
 
 static std::unordered_map<std::string, Mix*> soundMap;

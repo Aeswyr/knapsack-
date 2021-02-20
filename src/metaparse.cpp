@@ -1,11 +1,11 @@
-#include <knapsack/internal/import.h>
-#include <knapsack/internal/resource.h>
+#include "knapsack/internal/import.h"
+#include "knapsack/internal/resource.h"
 
 #include <filesystem>
 #include <fstream>
 #include <string>
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 namespace fs = std::filesystem;
 using ios = std::ifstream;

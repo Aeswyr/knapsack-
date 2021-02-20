@@ -6,14 +6,40 @@
 #include <vector>
 #include <algorithm>
 
+#define GLFW_INCLUDE_NONE
+#include <glad/glad.h> 
+#include <GLFW/glfw3.h>
+#undef GLFW_INCLUDE_NONE
+
 #include <knapsack/internal/import.h>
 #include <knapsack/internal/resource.h>
 
-#include "knapsack/globals.h"
-#include "knapsack/log.h"
+#include <knapsack/globals.h>
+#include <knapsack/log.h>
 
 static unsigned long long RenderTime;
 static std::unordered_map<std::string, Texture*>  spriteMap;
+
+static unsigned int compileShader(unsigned int type, const std::string& source) {
+	unsigned int id = glCreateShader(type);
+	const char* src = source.c_str();
+	glShaderSource(id, 1, &src, nullptr);
+	glCompileShader(id);
+
+	int status;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &status);
+	if (!status) {
+		int len;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &len);
+		char* message = (char*)alloca(len * sizeof(char));
+		glGetShaderInfoLog(id, len, &len, message);
+		out::log << out::err << message << out::endl;
+		glDeleteShader(id);
+		return 0;
+	}
+	return id;
+}
+
 
 Texture* getTexture(std::string name) {
 	if (spriteMap.find(name) == spriteMap.end()) {

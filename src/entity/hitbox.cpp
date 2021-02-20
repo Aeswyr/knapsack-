@@ -2,7 +2,7 @@
 
 #include <knapsack/internal/globals.h>
 
-#include "knapsack/sprite.h"
+#include <knapsack/sprite.h>
 
 bool hitbox::collision(Hitbox* a1, Hitbox* a2) {
     if (!a1 || !a2)

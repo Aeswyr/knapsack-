@@ -1,12 +1,12 @@
 #include "knapsack/engine.h"
-#include <knapsack/internal/eventpump.h>
+#include "knapsack/internal/eventpump.h"
 
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #undef GLFW_INCLUDE_NONE
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 
 int SCREEN_WIDTH = 1200;

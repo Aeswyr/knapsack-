@@ -1,7 +1,7 @@
 #pragma once
 
-#include "knapsack/sprite.h"
-#include "knapsack/vector.h"
+#include <knapsack/sprite.h>
+#include <knapsack/vector.h>
 
 class Tileset {
 private:

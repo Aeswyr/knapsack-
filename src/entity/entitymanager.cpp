@@ -8,7 +8,7 @@
 #include <knapsack/internal/entitymanager.h>
 #include <knapsack/internal/entity.h>
 
-#include "knapsack/globals.h"
+#include <knapsack/globals.h>
 
 struct EIDHash {
     size_t operator()(const EntityID& e) const { 
@@ -20,11 +20,13 @@ static std::unordered_map<EntityID, Entity, EIDHash> all_entity;
 static std::vector<EntityID> to_remove;
 
 void entities::update() {
-
+    for (std::pair<EntityID, Entity> e : all_entity)
+        e.second.update();
 }
 
 void entities::render() {
-        
+    for (std::pair<EntityID, Entity> e : all_entity)
+        e.second.render();
 }
 
 Entity& ecs::entity::get(EntityID id) {

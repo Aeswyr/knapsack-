@@ -13,9 +13,9 @@
 #include <knapsack/internal/particle.h>
 #include <knapsack/internal/globals.h>
 
-#include "knapsack/globals.h"
-#include "knapsack/sprite.h"
-#include "knapsack/text.h"
+#include <knapsack/globals.h>
+#include <knapsack/sprite.h>
+#include <knapsack/text.h>
 
 static Scene* activeScene = nullptr;
 
@@ -38,7 +38,6 @@ void hnd::render() {
 std::vector<System*> systems;
 void hnd::update() {
     particle::update();
-    entities::update();
     camera::update();
     key::update();
     //gamepad::update();
@@ -46,6 +45,8 @@ void hnd::update() {
     
     for(auto& sys : systems)
         sys->run();
+
+    entities::update();
 
     if (ENGINE_DEV_MODE) {
         std::string text = "FPS: ";

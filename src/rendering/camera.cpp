@@ -1,11 +1,11 @@
 #include "knapsack/camera.h"
-#include <knapsack/internal/camera.h>
+#include "knapsack/internal/camera.h"
 
 #include <vector>
 #include <algorithm>
 #include <random>
 
-#include "knapsack/globals.h"
+#include <knapsack/globals.h>
 
 
 static std::vector<Alignment*> targets;

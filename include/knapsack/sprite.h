@@ -4,13 +4,15 @@
 
 #include <knapsack/internal/renderable.h>
 
-#include "knapsack/render.h"
-#include "knapsack/alignment.h"
-#include "knapsack/globals.h"
+#include <knapsack/render.h>
+#include <knapsack/alignment.h>
+#include <knapsack/globals.h>
 
 struct Sprite : public Renderable {
 private:
     Texture* texture;
+    unsigned int buffer = 0;
+    int bufferindex = -1;
 	int frame;
     unsigned long long anim_time;
 public:

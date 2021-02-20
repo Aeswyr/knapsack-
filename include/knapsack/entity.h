@@ -10,7 +10,8 @@
 
 #include "knapsack/internal/entity.h"
 
-#include "knapsack/component.h"
+#include <knapsack/component.h>
+#include <knapsack/renderer.h>
 
 class Entity;
 
@@ -56,12 +57,31 @@ class Entity {
 private:
     std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
     boost::dynamic_bitset<> validcomponents = boost::dynamic_bitset<>(CID_MAX);
+    std::vector<Renderer*> renderers;
 public:
     const EntityID ID = ++id_source;
     Entity();
 
     ~Entity();
     
+    /**
+     * Attaches a renderer to this entity, which is drawn each frame during runtime.
+     * When an entity is deleted, all renderers associated with it are freed.
+     * 
+     * Renderer* r   -   a pointer to the renderer to attach
+     */ 
+    void attach(Renderer* r);
+
+    /** called internally by the engine, runs render logic for each renderer
+     * attached to this entity. User does not need to call
+     */ 
+    void render();
+
+    /** called internally by the engine, runs update logic for each renderer
+     * attached to this entity after ALL system logic is executed. User does not need to call
+     */ 
+    void update();
+
     /**
      * allocates memory for a new component on this entity and returns a pointer to that space,
      * or if the component already exists on this entity, returns a pointer to the space that

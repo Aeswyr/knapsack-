@@ -1,6 +1,6 @@
 #pragma once
 
-#include "knapsack/system.h"
+#include <knapsack/system.h>
 
 /**
  * class representing a single gamestate and all behavior associated

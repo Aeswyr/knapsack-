@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "knapsack/render.h"
-#include "knapsack/alignment.h"
+#include <knapsack/render.h>
+#include <knapsack/alignment.h>
 
 struct Text : public Renderable {
 private:

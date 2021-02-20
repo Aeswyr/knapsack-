@@ -12,7 +12,7 @@
 #include <knapsack/internal/handler.h>
 #include <knapsack/internal/eventpump.h>
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 int ENGINE_Z = INT_MAX;
 unsigned long long ENGINE_TICK = 0;
