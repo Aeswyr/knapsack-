@@ -91,13 +91,13 @@ public:
      */ 
     template <typename T> T& set() {
         if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()])
-            return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
         validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
-        componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = Component<T>::componentList.size();
-        typename Component<T>::ComponentDataPair comppair;
+        componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = Component<T>::componentList.list.size();
+        ComponentDataPair<T> comppair;
         comppair.ownerID = ID;
-        Component<T>::componentList.push_back(comppair);
-        return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+        Component<T>::componentList.list.push_back(comppair);
+        return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
     }
 
     /**
@@ -128,7 +128,7 @@ public:
      */ 
     template <typename T> T& get() {
         if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
-            return Component<T>::componentList[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
         }
         return nullptr;
     }
@@ -142,11 +142,7 @@ public:
         if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
             validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 0;
             unsigned short int pos = componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()];
-            std::swap(Component<T>::componentList[pos], Component<T>::componentList[Component<T>::componentList.size() - 1]);
-            Component<T>::componentList.pop_back();
-            if (Component<T>::componentList.size() > 0) {
-                ecs::entity::get(Component<T>::componentList[pos].ownerID).componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = pos;
-            }
+            Component<T>::componentList.remove(pos);
         }
     }
 };

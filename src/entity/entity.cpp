@@ -1,14 +1,24 @@
 #include "knapsack/entity.h"
 
 #include <knapsack/renderer.h>
+#include <knapsack/internal/component.h>
 
 Entity::Entity() {
 
 }
 
 Entity::~Entity() {
+    //free all renderers
     for (Renderer* r : renderers) {
         delete(r);
+    }
+    //Release all components
+    for (unsigned int i = 0; i < CID_MAX; i++) {
+        if (validcomponents[i]){
+            removeComponentByID(i, componentPos[i]);
+            validcomponents[i] = 0;
+        }
+        
     }
 }
 

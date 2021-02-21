@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <knapsack/internal/entity.h>
+#include <knapsack/internal/component.h>
 
 /**
  * A base struct all components must extend. Components are collections of
@@ -24,6 +25,7 @@ private:
         }
          static ComponentRegister reg() {
             unsigned int i = INTERNAL_ONLY_COMPONENT::getCID<T>();
+            registerComponentWrapper(&componentList);
             ComponentRegister r(i);
             return r;
         }
@@ -32,10 +34,9 @@ protected:
     static ComponentRegister r;
 public:
     struct ComponentDataPair {
-        T component;
-        unsigned int ownerID;
+
     };
-    static std::vector<ComponentDataPair> componentList;
+    static ComponentVectorWrapper<T> componentList;
     
     Component() {
         (void)r;
@@ -47,5 +48,5 @@ public:
 
 template <typename T> typename Component<T>::ComponentRegister Component<T>::r = ComponentRegister::reg();
 
-template <typename T>  std::vector<typename Component<T>::ComponentDataPair> Component<T>::componentList = std::vector<Component<T>::ComponentDataPair>();
+template <typename T>  ComponentVectorWrapper<T> Component<T>::componentList = ComponentVectorWrapper<T>();
 
