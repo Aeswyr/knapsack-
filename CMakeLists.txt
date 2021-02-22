@@ -26,8 +26,8 @@ endif()
         target_sources(${PROJECT_NAME} PRIVATE libs/glad/src/glad.c)
 
 #setup Freetype2
-        set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
-        add_subdirectory(libs/freetype2/)
+        # set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
+        # add_subdirectory(libs/freetype2/)
 
 #setup GLFW
         set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -43,7 +43,7 @@ endif()
         target_include_directories(${PROJECT_NAME} PRIVATE libs/glad/include/)
         target_include_directories(${PROJECT_NAME} PRIVATE libs/stb/)
         target_include_directories(${PROJECT_NAME} PRIVATE libs/glm/)
-        target_include_directories(${PROJECT_NAME} PRIVATE libs/freetype2/include/)
+        # target_include_directories(${PROJECT_NAME} PRIVATE libs/freetype2/include/)
         # target_include_directories(${PROJECT_NAME} PRIVATE libs/openal-soft/)
 
 # add source files and link
