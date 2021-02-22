@@ -26,8 +26,9 @@ endif()
         target_sources(${PROJECT_NAME} PRIVATE libs/glad/src/glad.c)
 
 #setup Freetype2
-        # set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
-        # add_subdirectory(libs/freetype/)
+        add_subdirectory(libs/freetype/)
+        add_dependencies(${PROJECT_NAME} freetype)
+
 
 #setup GLFW
         set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -43,10 +44,11 @@ endif()
         target_include_directories(${PROJECT_NAME} PRIVATE libs/glad/include/)
         target_include_directories(${PROJECT_NAME} PRIVATE libs/stb/)
         target_include_directories(${PROJECT_NAME} PRIVATE libs/glm/)
-        # target_include_directories(${PROJECT_NAME} PRIVATE libs/freetype/include/)
+        target_include_directories(${PROJECT_NAME} PRIVATE libs/freetype/include/)
         # target_include_directories(${PROJECT_NAME} PRIVATE libs/openal-soft/)
 
 # add source files and link
         add_subdirectory(src/)
+        
         target_include_directories(${PROJECT_NAME} PUBLIC include/)
-        target_link_libraries(${PROJECT_NAME} Boost::boost Boost::thread glfw)
+        target_link_libraries(${PROJECT_NAME} Boost::boost Boost::thread glfw ${CMAKE_BINARY_DIR}/libs/freetype/libfreetype.a)

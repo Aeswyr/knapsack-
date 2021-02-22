@@ -6,6 +6,8 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #undef GLFW_INCLUDE_NONE
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <knapsack/internal/screen.h>
 #include <knapsack/internal/resource.h>
@@ -18,6 +20,8 @@ int ENGINE_Z = INT_MAX;
 unsigned long long ENGINE_TICK = 0;
 bool ENGINE_DEV_MODE = false;
 unsigned int ENGINE_UPS = 0, ENGINE_FPS = 0, ENGINE_MS = 0;
+
+static FT_Library  library;
 
 static bool running = false;
 static unsigned int fps, ups;
@@ -109,6 +113,13 @@ void engine::start(int w, int h, const char* name, void (*initfunc)()) {
         out::log << out::err << "Window initialization failed" << out::endl;
         return;
     }
+
+    FT_Error error = FT_Init_FreeType( &library );
+    if ( error )
+    {
+        out::log << out::err << "Freetype initialization failed" << out::endl;
+    }
+
     //gamepad::locateControllers();
     key::init();
     running = true;
