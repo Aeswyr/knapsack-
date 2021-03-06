@@ -1,0 +1,1 @@
+target_sources(${PROJECT_NAME} PRIVATE indexbuffer.cpp vertexbuffer.cpp glutils.cpp layout.cpp vertexarray.cpp)
