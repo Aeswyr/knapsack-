@@ -83,6 +83,13 @@ public:
     void update();
 
     /**
+     * performs an & operation this entity's internal bitset to the mask bitset to check for overlap
+     * 
+     * returns      -   true if the mask bitset completely overlaps, and false otherwise
+     */ 
+    bool mask(boost::dynamic_bitset<> mask);
+
+    /**
      * allocates memory for a new component on this entity and returns a pointer to that space,
      * or if the component already exists on this entity, returns a pointer to the space that
      * it exists in.

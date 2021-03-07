@@ -51,13 +51,7 @@ std::vector<EntityID> ecs::Filter::query() {
     std::vector<EntityID> q;
     for (std::pair<EntityID, Entity> e : all_entity) {
         bool has = true;
-        for (unsigned int i : inc)
-            if (!e.second.has(i))
-                has = false;
-        for (unsigned int i : exc)
-            if (e.second.has(i))
-                has = false;
-        if (has)
+        if (!e.second.mask(exc) && e.second.mask(inc))
             q.push_back(e.first);
     }
     return q;

@@ -1,14 +1,16 @@
 #include <vector>
 
+#include <boost/dynamic_bitset.hpp>
+
 #include <knapsack/internal/entity.h>
 
 namespace ecs {
 
     class Filter
-    {
+    { 
     private:
-        std::vector<unsigned int> inc = std::vector<unsigned int>(CID_MAX);
-        std::vector<unsigned int> exc = std::vector<unsigned int>(CID_MAX);
+        boost::dynamic_bitset<> inc = boost::dynamic_bitset<>(CID_MAX);
+        boost::dynamic_bitset<> exc = boost::dynamic_bitset<>(CID_MAX);
     public:
         /**
          * Sets a filter to only query entities which have the set component
@@ -17,7 +19,7 @@ namespace ecs {
          * returns      -   the filter with an edited inclusion list
          */ 
         template <typename T> Filter& include() {
-            inc.push_back(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            inc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
             return *this;
         }
 
@@ -28,7 +30,7 @@ namespace ecs {
          * returns      -   the filter with an edited inclusion list
          */ 
         template <typename T, typename... Types> Filter& include() {
-            inc.push_back(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            inc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
             include<Types ...>();
             return *this;
         }
@@ -40,7 +42,7 @@ namespace ecs {
          * returns      -   the filter with an edited exclusion list
          */ 
         template <typename T> Filter& exclude() {
-            exc.push_back(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            exc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
             return *this;
         }
 
@@ -51,10 +53,15 @@ namespace ecs {
          * returns      -   the filter with an edited exclusion list
          */ 
         template <typename T, typename... Types> Filter& exclude() {
-            exc.push_back(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            exc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
             exclude<Types ...>();
             return *this;
         }
+
+        /**
+         * clears this filter's inclusion and exclusion lists
+         */ 
+        void reset();
 
         /**
          * fetches a list of all entities with components matching the inclusion
