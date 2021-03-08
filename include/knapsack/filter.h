@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 #include <boost/dynamic_bitset.hpp>
@@ -69,8 +71,6 @@ namespace ecs {
          */ 
         std::vector<EntityID> query();
     };
-
-    Filter filter;
 };
 
 

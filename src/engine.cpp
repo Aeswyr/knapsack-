@@ -49,7 +49,7 @@ int update() {
     double startu = 0;
     double pdel = 0;
 
-    double delta = 1 / 60;
+    double delta = 1.0 / 60;
     double deltap = 1;
 
     fps = 0;
@@ -58,7 +58,7 @@ int update() {
 
     while (running)
     {
-        if ((glfwGetTime() - lastu) >= delta) {
+        if ((glfwGetTime() - lastu) > delta) {
             ups++;
             startu = glfwGetTime();
             tick();

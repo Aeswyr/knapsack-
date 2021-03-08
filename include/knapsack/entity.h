@@ -87,7 +87,7 @@ public:
      * 
      * returns      -   true if the mask bitset completely overlaps, and false otherwise
      */ 
-    bool mask(boost::dynamic_bitset<> mask);
+    bool mask(boost::dynamic_bitset<>& mask);
 
     /**
      * allocates memory for a new component on this entity and returns a pointer to that space,

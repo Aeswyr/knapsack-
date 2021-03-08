@@ -38,6 +38,6 @@ Entity::~Entity() {
     }
  }
 
- bool Entity::mask(boost::dynamic_bitset<> mask) {
+ bool Entity::mask(boost::dynamic_bitset<>& mask) {
     return (validcomponents & mask) == mask;
  }
