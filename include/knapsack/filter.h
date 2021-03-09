@@ -1,19 +1,23 @@
 #pragma once
 
 #include <vector>
-
-#include <boost/dynamic_bitset.hpp>
+#include <memory>
 
 #include <knapsack/internal/entity.h>
 
-namespace ecs {
 
+namespace ecs {
     class Filter
     { 
     private:
-        boost::dynamic_bitset<> inc = boost::dynamic_bitset<>(CID_MAX);
-        boost::dynamic_bitset<> exc = boost::dynamic_bitset<>(CID_MAX);
+        std::shared_ptr<void> inc;
+        std::shared_ptr<void> exc;
+
+        void setInc(unsigned int CID);
+        void setExc(unsigned int CID);
     public:
+        Filter();
+
         /**
          * Sets a filter to only query entities which have the set component
          * 
@@ -21,7 +25,7 @@ namespace ecs {
          * returns      -   the filter with an edited inclusion list
          */ 
         template <typename T> Filter& include() {
-            inc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
+            setInc(INTERNAL_ONLY_COMPONENT::getCID<T>());
             return *this;
         }
 
@@ -31,10 +35,9 @@ namespace ecs {
          * typename T   -   the component(s) to query for
          * returns      -   the filter with an edited inclusion list
          */ 
-        template <typename T, typename... Types> Filter& include() {
-            inc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
-            include<Types ...>();
-            return *this;
+        template <typename T, typename U, typename... Types> Filter& include() {
+            setInc(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            return include<U, Types ...>();
         }
 
         /**
@@ -44,7 +47,7 @@ namespace ecs {
          * returns      -   the filter with an edited exclusion list
          */ 
         template <typename T> Filter& exclude() {
-            exc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
+            setExc(INTERNAL_ONLY_COMPONENT::getCID<T>());
             return *this;
         }
 
@@ -54,10 +57,9 @@ namespace ecs {
          * typename T   -   the component(s) to exclude from the query
          * returns      -   the filter with an edited exclusion list
          */ 
-        template <typename T, typename... Types> Filter& exclude() {
-            exc[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
-            exclude<Types ...>();
-            return *this;
+        template <typename T, typename U, typename... Types> Filter& exclude() {
+            setExc(INTERNAL_ONLY_COMPONENT::getCID<T>());
+            return exclude<U, Types ...>();
         }
 
         /**
@@ -71,6 +73,8 @@ namespace ecs {
          */ 
         std::vector<EntityID> query();
     };
+    
+    Filter filter();
 };
 
 
