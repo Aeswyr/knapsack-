@@ -11,17 +11,20 @@ Entity::Entity() {
 }
 
 Entity::~Entity() {
-    //free all renderers
-    for (Renderer* r : renderers) {
-        delete(r);
-    }
-    renderers.clear();
+    
+    if (validcomponents.use_count() == 1) {
+        //free all renderers
+        for (Renderer* r : renderers) {
+            delete(r);
+        }
+        renderers.clear();
 
 
-    for (unsigned int i = 0; i < CID_MAX; i++) {
-        if ((*(boost::dynamic_bitset<>*)validcomponents.get())[i]){
-            removeComponentByID(i, componentPos[i]);
-            (*(boost::dynamic_bitset<>*)validcomponents.get())[i] = 0;
+        for (unsigned int i = 0; i < CID_MAX; i++) {
+            if ((*(boost::dynamic_bitset<>*)validcomponents.get())[i]){
+                removeComponentByID(i, componentPos[i]);
+                (*(boost::dynamic_bitset<>*)validcomponents.get())[i] = 0;
+            }
         }
     }
 }
@@ -46,6 +49,10 @@ bool Entity::mask(void* mask) {
     return ((*(boost::dynamic_bitset<>*)validcomponents.get()) & (*(boost::dynamic_bitset<>*)mask)) == (*(boost::dynamic_bitset<>*)mask); 
 }
 
+bool Entity::mask(void* mask, void* test) {
+    return ((*(boost::dynamic_bitset<>*)validcomponents.get()) & (*(boost::dynamic_bitset<>*)mask)) == (*(boost::dynamic_bitset<>*)test);
+}
+
 unsigned short int& Entity::compPos(unsigned int CID) {
     return componentPos[CID];
 }
@@ -61,3 +68,4 @@ void Entity::bitsetSet(unsigned int CID, int val) {
 bool Entity::has(unsigned int i) {
     return (*(boost::dynamic_bitset<>*)validcomponents.get())[i];
 }
+

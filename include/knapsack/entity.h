@@ -96,6 +96,13 @@ public:
     bool mask(void* mask);
 
     /**
+     * performs an & operation this entity's internal bitset to the mask bitset to check equality
+     * 
+     * returns      -   true if the mask bitset equals the input value, and false otherwise
+     */ 
+    bool mask(void* mask, void* test);
+
+    /**
      * allocates memory for a new component on this entity and returns a pointer to that space,
      * or if the component already exists on this entity, returns a pointer to the space that
      * it exists in.

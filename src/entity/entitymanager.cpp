@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 
+#include <boost/dynamic_bitset.hpp>
+
 #include <knapsack/internal/entitymanager.h>
 #include <knapsack/internal/entity.h>
 
@@ -48,10 +50,11 @@ Entity& ecs::entity::create() {
 }
 
 std::vector<EntityID> ecs::Filter::query() {
+    static boost::dynamic_bitset<> zero {CID_MAX, 0};
     std::vector<EntityID> q;
     for (auto& e : all_entity) {
         bool has = true;
-        if (!e.second.mask(exc.get()) && e.second.mask(inc.get()))
+        if (e.second.mask(exc.get(), &zero) && e.second.mask(inc.get()))
             q.push_back(e.first);
     }
     return q;
