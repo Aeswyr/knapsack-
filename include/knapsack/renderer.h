@@ -1,6 +1,7 @@
 #pragma once
 
-#include "knapsack/entity.h"
+#include <knapsack/entity.h>
+class Entity;
 
 struct Renderer {
 
@@ -8,4 +9,4 @@ struct Renderer {
 
     virtual void render() = 0;
 
-}
+};

@@ -1,1 +1,1 @@
-target_sources(${PROJECT_NAME} PRIVATE component.cpp)
+target_sources(${PROJECT_NAME} PRIVATE component.cpp filter.cpp)

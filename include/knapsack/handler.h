@@ -1,6 +1,6 @@
 #pragma once
 
-#include "knapsack/scene.h"
+#include <knapsack/scene.h>
 
 
 /**

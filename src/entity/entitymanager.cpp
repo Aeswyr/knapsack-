@@ -1,49 +1,61 @@
 #include "knapsack/entity.h"
+#include "knapsack/filter.h"
 
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 
+#include <boost/dynamic_bitset.hpp>
+
 #include <knapsack/internal/entitymanager.h>
+#include <knapsack/internal/entity.h>
 
-#include "knapsack/globals.h"
+#include <knapsack/globals.h>
 
-static std::vector<Entity*> all_entity;
-static std::vector<Entity*> to_add;
-static std::vector<Entity*> to_remove;
+struct EIDHash {
+    size_t operator()(const EntityID& e) const { 
+        return e.id; 
+    } 
+};
+
+static std::unordered_map<EntityID, Entity, EIDHash> all_entity;
 
 void entities::update() {
-    if (to_add.size()) {
-        all_entity.insert(all_entity.end(), to_add.begin(), to_add.end());
-        to_add.clear();
-    }
-
-    if (to_remove.size()) {
-        for (unsigned int i = 0; i < to_remove.size(); i++) {
-            all_entity.erase(std::remove(all_entity.begin(), all_entity.end(), to_remove[i]));
-            delete(to_remove[i]);
-        }
-        to_remove.clear();
-    }
-
+    for (auto& e : all_entity)
+        e.second.update();
 }
 
 void entities::render() {
-        
+    for (auto& e : all_entity)
+        e.second.render();
 }
 
-std::vector<Entity*>* entities::all() {
-    return &all_entity;
+Entity& ecs::entity::get(EntityID id) {
+    return all_entity.at(id);
 }
 
-void entities::add(Entity* e) {
-    to_add.push_back(e);
+void ecs::entity::del(EntityID id) {
+    all_entity.erase(id);
 }
 
-void entities::remove(Entity* e) {
-    if (std::find(to_remove.begin(), to_remove.end(), e) == to_remove.end())
-        to_remove.push_back(e);
+void ecs::entity::clear() {
+    all_entity.clear();
 }
 
-void entities::clear() {
-    to_remove.insert(to_remove.end(), all_entity.begin(), all_entity.end());
+Entity& ecs::entity::create() {
+    Entity& e = *(new Entity);
+    EntityID id = e.ID;
+    all_entity.emplace(id, e);
+    return all_entity[id];
+}
+
+std::vector<EntityID> ecs::Filter::query() {
+    static boost::dynamic_bitset<> zero {CID_MAX, 0};
+    std::vector<EntityID> q;
+    for (auto& e : all_entity) {
+        bool has = true;
+        if (e.second.mask(exc.get(), &zero) && e.second.mask(inc.get()))
+            q.push_back(e.first);
+    }
+    return q;
 }

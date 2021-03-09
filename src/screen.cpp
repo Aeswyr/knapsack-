@@ -1,12 +1,12 @@
 #include "knapsack/engine.h"
-#include <knapsack/internal/eventpump.h>
+#include "knapsack/internal/eventpump.h"
 
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #undef GLFW_INCLUDE_NONE
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 
 int SCREEN_WIDTH = 1200;
@@ -57,7 +57,7 @@ bool initWindow(int w, int h, const char* name) {
     window = glfwCreateWindow(w, h, name, NULL, NULL);
     if (window == NULL)
     {
-        flog::out << flog::err << "failed to create GLFW window" << flog::endl;
+        out::log << out::err << "failed to create GLFW window" << out::endl;
         glfwTerminate();
         return -1;
     }
@@ -65,7 +65,7 @@ bool initWindow(int w, int h, const char* name) {
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        flog::out << flog::err << "Failed to initialize GLAD" << flog::endl;
+        out::log << out::err << "Failed to initialize GLAD" << out::endl;
         return -1;
     }
 

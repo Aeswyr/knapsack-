@@ -1,4 +1,5 @@
-#include <knapsack/internal/audio.h>
+#include "knapsack/internal/audio.h"
+#include "knapsack/audio.h"
 
 #include <string>
 #include <unordered_map>
@@ -6,15 +7,15 @@
 #include <knapsack/internal/import.h>
 #include <knapsack/internal/resource.h>
 
-#include "knapsack/handler.h"
-#include "knapsack/log.h"
+#include <knapsack/handler.h>
+#include <knapsack/log.h>
 
 
 static std::unordered_map<std::string, Mix*> soundMap;
 
 Mix* getMix(std::string name) {
     if (soundMap.find(name) == soundMap.end()) {
-        flog::out << flog::err << name << " is not present in the sound map" << flog::endl;
+        out::log << out::err << name << " is not present in the sound map" << out::endl;
         exit(1);
     }
     Mix* ptr = soundMap[name];
@@ -24,18 +25,18 @@ Mix* getMix(std::string name) {
 void imp::importAudio(std::string path) {
     imp::SoundData data = imp::parseSound(path);
 
-    flog::out << "\tcollecting data" << flog::endl;
+    out::log << "\tcollecting data" << out::endl;
     
     std::string name = data.name;
     
     if (data.isMus) {
         Mus* sound = new Mus(data.path);
         soundMap[name] = sound;
-        flog::out << "\tmapping music at " << name << flog::endl;
+        out::log << "\tmapping music at " << name << out::endl;
     } else {
         Sfx* sound = new Sfx(data.path);
         soundMap[name] = sound;
-        flog::out << "\tmapping sound at " << name << flog::endl;
+        out::log << "\tmapping sound at " << name << out::endl;
     }
 
     
@@ -43,12 +44,12 @@ void imp::importAudio(std::string path) {
 
 void Mus::lazyload() {
     //data = Mix_LoadMUS(path.c_str());
-    flog::out << "lazyloaded music at " << path << flog::endl;
+    out::log << "lazyloaded music at " << path << out::endl;
 }
 
 void Mus::unload() {
     //Mix_FreeMusic(data);
-    flog::out << "unloaded music at " << path << flog::endl;
+    out::log << "unloaded music at " << path << out::endl;
 }
 
 int Mus::play(int loops) {
@@ -59,12 +60,12 @@ int Mus::play(int loops) {
 
 void Sfx::lazyload() {
     //data = Mix_LoadWAV(path.c_str());
-    flog::out << "lazyloaded sound at " << path << flog::endl;
+    out::log << "lazyloaded sound at " << path << out::endl;
 }
 
 void Sfx::unload() {
     //Mix_FreeChunk(data);
-    flog::out << "unloaded sound at " << path << flog::endl;
+    out::log << "unloaded sound at " << path << out::endl;
 }
 
 int Sfx::play(int loops) {

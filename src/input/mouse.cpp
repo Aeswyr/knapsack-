@@ -1,7 +1,7 @@
-#include <knapsack/internal/eventpump.h>
+#include "knapsack/internal/eventpump.h"
 #include "knapsack/input.h" 
 
-#include "knapsack/globals.h"
+#include <knapsack/globals.h>
 
 static int X = 0, Y = 0;
 

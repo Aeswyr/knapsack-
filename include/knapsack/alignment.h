@@ -1,6 +1,6 @@
 #pragma once
 
-#include "knapsack/vector.h"
+#include <knapsack/vector.h>
 
 /**
  * Contains data representing position and orientation

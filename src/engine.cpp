@@ -6,18 +6,22 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #undef GLFW_INCLUDE_NONE
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <knapsack/internal/screen.h>
 #include <knapsack/internal/resource.h>
 #include <knapsack/internal/handler.h>
 #include <knapsack/internal/eventpump.h>
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 int ENGINE_Z = INT_MAX;
 unsigned long long ENGINE_TICK = 0;
 bool ENGINE_DEV_MODE = false;
 unsigned int ENGINE_UPS = 0, ENGINE_FPS = 0, ENGINE_MS = 0;
+
+static FT_Library  library;
 
 static bool running = false;
 static unsigned int fps, ups;
@@ -40,12 +44,12 @@ int update() {
 
     double lastu = glfwGetTime();
     double lastp = glfwGetTime();
-    flog::out << flog::alert << "Starting game" << flog::endl;
+    out::log << out::alert << "Starting game" << out::endl;
 
     double startu = 0;
     double pdel = 0;
 
-    double delta = 1 / 60;
+    double delta = 1.0 / 60;
     double deltap = 1;
 
     fps = 0;
@@ -54,7 +58,7 @@ int update() {
 
     while (running)
     {
-        if ((glfwGetTime() - lastu) >= delta) {
+        if ((glfwGetTime() - lastu) > delta) {
             ups++;
             startu = glfwGetTime();
             tick();
@@ -66,8 +70,8 @@ int update() {
                 ENGINE_FPS = (int)(fps * deltap / pdel);
                 ENGINE_UPS = (int)(ups * deltap / pdel);
                 ENGINE_MS = (avgu * 1000.000 / ups);
-                flog::out << pdel * 1.000 << "s since last update" << "\n\tFPS: " << ENGINE_FPS
-                 << "\n\tUPS: " << ENGINE_UPS << "\n\tAvg utime: " << ENGINE_MS << "ms" << flog::endl;
+                out::log << pdel * 1.000 << "s since last update" << "\n\tFPS: " << ENGINE_FPS
+                 << "\n\tUPS: " << ENGINE_UPS << "\n\tAvg utime: " << ENGINE_MS << "ms" << out::endl;
 
                 ups = 0;
                 fps = 0;
@@ -106,9 +110,16 @@ int run() {
 
 void engine::start(int w, int h, const char* name, void (*initfunc)()) {
     if (!initWindow(w, h, name)) {
-        flog::out << flog::err << "Window initialization failed" << flog::endl;
+        out::log << out::err << "Window initialization failed" << out::endl;
         return;
     }
+
+    FT_Error error = FT_Init_FreeType( &library );
+    if ( error )
+    {
+        out::log << out::err << "Freetype initialization failed" << out::endl;
+    }
+
     //gamepad::locateControllers();
     key::init();
     running = true;
@@ -120,7 +131,7 @@ void engine::start(int w, int h, const char* name, void (*initfunc)()) {
 }
 
 void engine::stop() {
-    flog::out << flog::alert << "Closing game" << flog::endl;
+    out::log << out::alert << "Closing game" << out::endl;
     running = false;
     int threadReturn;
     eThread->join();

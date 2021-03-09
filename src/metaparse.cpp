@@ -1,11 +1,11 @@
-#include <knapsack/internal/import.h>
-#include <knapsack/internal/resource.h>
+#include "knapsack/internal/import.h"
+#include "knapsack/internal/resource.h"
 
 #include <filesystem>
 #include <fstream>
 #include <string>
 
-#include "knapsack/log.h"
+#include <knapsack/log.h>
 
 namespace fs = std::filesystem;
 using ios = std::ifstream;
@@ -52,7 +52,7 @@ void recurseDir(std::string path) {
             recurseDir(entry.path().string());
         } else {
             if (!entry.path().extension().string().compare(".meta")) {
-                flog::out << "importing resource at " << entry.path().string().substr(0, entry.path().string().length() - 5) << flog::endl;
+                out::log << "importing resource at " << entry.path().string().substr(0, entry.path().string().length() - 5) << out::endl;
                 if (entry.path().filename().string().find(".png") != std::string::npos) {
                     imp::importSprite(entry.path().string().c_str());
                 } else {
@@ -65,11 +65,11 @@ void recurseDir(std::string path) {
 
 void res::init() {
     sfx::init();
-    flog::out << "starting resource import" << flog::endl;
+    out::log << "starting resource import" << out::endl;
     std::string path = "./res";
     spr::init();
     recurseDir(path);
-    flog::out << "finished resource import" << flog::endl;
+    out::log << "finished resource import" << out::endl;
 }
 
 void res::close() {

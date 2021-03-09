@@ -5,7 +5,7 @@
 
 #include <knapsack/internal/particle.h>
 
-#include "knapsack/camera.h"
+#include <knapsack/camera.h>
 
 static std::vector<ParticleSource*> all_particle;
 static std::vector<ParticleSource*> to_add;

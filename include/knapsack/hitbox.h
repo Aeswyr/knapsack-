@@ -1,6 +1,6 @@
 #pragma once
 
-#include "knapsack/alignment.h"
+#include <knapsack/alignment.h>
 
 /**
  * struct representing a rectanglar region which can detect overlap with other regions

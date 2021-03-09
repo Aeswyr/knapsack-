@@ -1,6 +1,6 @@
 #pragma once
 
-#include "knapsack/particle.h"
+#include <knapsack/particle.h>
 
 namespace particle {
     void update();

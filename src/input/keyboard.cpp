@@ -1,4 +1,4 @@
-#include <knapsack/internal/eventpump.h>
+#include "knapsack/internal/eventpump.h"
 #include "knapsack/input.h"
 
 #include <string.h>

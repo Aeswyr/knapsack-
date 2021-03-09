@@ -1,4 +1,5 @@
 #include "knapsack/handler.h"
+#include "knapsack/scene.h"
 
 #include <vector>
 #include <string>
@@ -12,9 +13,9 @@
 #include <knapsack/internal/particle.h>
 #include <knapsack/internal/globals.h>
 
-#include "knapsack/globals.h"
-#include "knapsack/sprite.h"
-#include "knapsack/text.h"
+#include <knapsack/globals.h>
+#include <knapsack/sprite.h>
+#include <knapsack/text.h>
 
 static Scene* activeScene = nullptr;
 
@@ -28,38 +29,36 @@ void hnd::render() {
     particle::render();
     entities::render();
     if (ENGINE_DEV_MODE) {
-        fpsdisplay.render(0, 172, ENGINE_Z);
-        upsdisplay.render(0, 190, ENGINE_Z);
-        msdisplay.render(0, 208, ENGINE_Z);
+        //dev mode render
     }
 }
 
+std::vector<System*> systems;
 void hnd::update() {
     particle::update();
-    entities::update();
     camera::update();
     key::update();
     //gamepad::update();
 
+    
+    for(auto& sys : systems)
+        sys->run();
+
+    entities::update();
+
     if (ENGINE_DEV_MODE) {
-        std::string text = "FPS: ";
-        text.append(std::to_string(ENGINE_FPS));
-        fpsdisplay.update(text);
-        text = "UPS: ";
-        text.append(std::to_string(ENGINE_UPS));
-        upsdisplay.update(text);
-        text = "Tick(ms): ";
-        text.append(std::to_string(ENGINE_MS));
-        msdisplay.update(text);
+        //dev mode update
     }
 }
 
 void hnd::setScene(Scene* scene) {
+    scene->start();
     activeScene = scene;
 }
 
 void hnd::initScene(Scene* scene) {
     scene->init();
+    scene->start();
     activeScene = scene;
 }
 
@@ -84,4 +83,18 @@ AudioSource* engine::getAudioSource(std::string name) {
         source = (*audio_sources)[name];
     }
     return source;
+}
+
+void ecs::system::add(System* system) {
+    systems.push_back(system);
+}
+
+void ecs::system::free() {
+    for(auto& sys : systems)
+        delete(sys);
+    systems.clear();
+}
+
+void ecs::system::clear() {
+    systems.clear();
 }

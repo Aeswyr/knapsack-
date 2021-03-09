@@ -5,9 +5,9 @@
 #include <filesystem>
 
 
-namespace flog {
-    EngineLog out;
-    EngineLog fout(true);
+namespace out {
+    EngineLog log;
+    EngineLog flog(true);
     EngineLogWarning warn;
     EngineLogError err;
     EngineLogNewline newl;
@@ -229,11 +229,11 @@ namespace flog {
             output.open(file, std::ofstream::out | std::ofstream::app);
             output << "[WARNING]: ";
             output.close();
-            flog::fout.normal = false;
+            out::flog.normal = false;
             this->normal = false;
             return *this;
         }
-        flog::out.normal = false;
+        out::log.normal = false;
         this->normal = false;
         return *this;
     }
@@ -243,11 +243,11 @@ namespace flog {
             output.open(file, std::ofstream::out | std::ofstream::app);
             output << "[ERROR]: ";
             output.close();
-            flog::fout.normal = false;
+            out::flog.normal = false;
             this->normal = false;
             return *this;
         }
-        flog::out.normal = false;
+        out::log.normal = false;
         this->normal = false;
         return *this;
     }
@@ -257,11 +257,11 @@ namespace flog {
             output.open(file, std::ofstream::out | std::ofstream::app);
             output << "[ALERT]: ";
             output.close();
-            flog::fout.normal = false;
+            out::flog.normal = false;
             this->normal = false;
             return *this;
         }
-        flog::out.normal = false;
+        out::log.normal = false;
         this->normal = false;
         return *this;
     }
@@ -281,11 +281,11 @@ namespace flog {
             output.open(file, std::ofstream::out | std::ofstream::app);
             output << "\n";
             output.close();
-            flog::fout.normal = true;
+            out::flog.normal = true;
             this->normal = true;
             return *this;
         }
-        flog::out.normal = true;
+        out::log.normal = true;
         this->normal = true;
         return *this;
     }
