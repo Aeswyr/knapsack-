@@ -5,13 +5,13 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-#include <boost/dynamic_bitset.hpp>
+#include <memory>
 
 #include "knapsack/internal/entity.h"
 
 #include <knapsack/component.h>
 #include <knapsack/renderer.h>
+#include <knapsack/log.h>
 
 class Entity;
 
@@ -47,6 +47,7 @@ namespace ecs {
          * clears all existing entities
          */ 
         void clear();
+
     };
 };
 
@@ -55,10 +56,15 @@ static EntityID id_source;
 
 class Entity {
 private:
-    std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
-    boost::dynamic_bitset<> validcomponents = boost::dynamic_bitset<>(CID_MAX);
+    std::shared_ptr<void> validcomponents;
     std::vector<Renderer*> renderers;
+    std::vector<unsigned short int> componentPos = std::vector<unsigned short int>(CID_MAX);
+
+    bool bitsetGet(unsigned int CID);
+    void bitsetSet(unsigned int CID, int val);
 public:
+    
+
     const EntityID ID = ++id_source;
     Entity();
 
@@ -83,6 +89,20 @@ public:
     void update();
 
     /**
+     * performs an & operation this entity's internal bitset to the mask bitset to check for overlap
+     * 
+     * returns      -   true if the mask bitset completely overlaps, and false otherwise
+     */ 
+    bool mask(void* mask);
+
+    /**
+     * performs an & operation this entity's internal bitset to the mask bitset to check equality
+     * 
+     * returns      -   true if the mask bitset equals the input value, and false otherwise
+     */ 
+    bool mask(void* mask, void* test);
+
+    /**
      * allocates memory for a new component on this entity and returns a pointer to that space,
      * or if the component already exists on this entity, returns a pointer to the space that
      * it exists in.
@@ -90,14 +110,14 @@ public:
      * typename T    -   the type of the new component
      */ 
     template <typename T> T& set() {
-        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()])
-            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
-        validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 1;
+        if (bitsetGet(INTERNAL_ONLY_COMPONENT::getCID<T>()))
+            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]].component;
+        bitsetSet(INTERNAL_ONLY_COMPONENT::getCID<T>(), 1);
         componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()] = Component<T>::componentList.list.size();
         ComponentDataPair<T> comppair;
         comppair.ownerID = ID;
         Component<T>::componentList.list.push_back(comppair);
-        return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+        return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]].component;
     }
 
     /**
@@ -107,7 +127,7 @@ public:
      * returns      -   true if this entity has a given component, and false otherwise
      */ 
     template <typename T> bool has() {
-        return validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()];
+        return bitsetGet(INTERNAL_ONLY_COMPONENT::getCID<T>());
     }
 
     /**
@@ -116,21 +136,20 @@ public:
      * unsigned int T   -   the component id to check for
      * returns          -   true if this entity has a given component, and false otherwise
      */ 
-    bool has(unsigned int i) {
-        return validcomponents[i];
-    }
+    bool has(unsigned int i);
 
     /**
      * gets a pointer to acomponent on an entity
      * 
      * typename T   -   the type of the component to get
-     * returns      -   a pointer to the component or null if the entity does not have the given component
+     * returns      -   a pointer to the component or NULL_ENTITY if the entity does not have the given component
      */ 
     template <typename T> T& get() {
-        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
-            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]];
+        if (bitsetGet(INTERNAL_ONLY_COMPONENT::getCID<T>())) {
+            return Component<T>::componentList.list[componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()]].component;
         }
-        return nullptr;
+        out::log << out::err << "Invalid get attempt, Entity " << ID.gen << "::" << ID.id << " does not have component " << typeid(T).name() << out::endl;
+        exit(1);
     }
 
     /**
@@ -139,12 +158,14 @@ public:
      * typenname T  -   the type of the component to remove
      */ 
     template <typename T> void del() {
-        if (validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()]) {
-            validcomponents[INTERNAL_ONLY_COMPONENT::getCID<T>()] = 0;
+        if (bitsetGet(INTERNAL_ONLY_COMPONENT::getCID<T>())) {
+            bitsetSet(INTERNAL_ONLY_COMPONENT::getCID<T>(), 0);
             unsigned short int pos = componentPos[INTERNAL_ONLY_COMPONENT::getCID<T>()];
             Component<T>::componentList.remove(pos);
         }
     }
+
+    unsigned short int& compPos(unsigned int CID);
 };
 
 

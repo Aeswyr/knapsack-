@@ -19,5 +19,16 @@ namespace ecs {
          * System system    -   the system to register
          */ 
         void add(System* system);
+
+        /**
+         * deregiesters all currently active systems
+         */ 
+        void clear();
+
+        /**
+         * deregiesters and FREES MEMORY for all currently active systems via their delete methods
+         */ 
+        void free();
+
     };
 };
