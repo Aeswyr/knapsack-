@@ -1,4 +1,4 @@
-#include "knapsack/internal/gl/utils.h"
+#pragma once
 
 #include <string>
 

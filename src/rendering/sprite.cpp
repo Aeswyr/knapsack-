@@ -10,13 +10,17 @@
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #undef GLFW_INCLUDE_NONE
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 #include <knapsack/internal/import.h>
 #include <knapsack/internal/resource.h>
-#include <knapsack/internal/glutils.h>
+#include <knapsack/internal/gl/utils.h>
+#include <knapsack/internal/screen.h>
 
 #include <knapsack/globals.h>
 #include <knapsack/log.h>
+
 
 static unsigned long long RenderTime;
 static std::unordered_map<std::string, Texture*>  spriteMap;
@@ -129,6 +133,12 @@ void spr::clean() {
 
 
 void Texture::lazyload() {
+	unsigned char* data = stbi_load(path.c_str(), &w, &h, &channels, 0);
+	glGenTextures(1, &sheetTextureId);
+	glBindTexture(GL_TEXTURE_2D, sheetTextureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, colChannel, w, h, 0, colChannel, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(data);
 	/*
 	SDL_Surface* surface = IMG_Load(path.c_str());
 	if (surface == NULL) {
@@ -232,7 +242,7 @@ void spr::flush() {
 }
 
 void spr::push() {
-
+	glfwSwapBuffers(getWindow());
 }
 
 void spr::init() { 

@@ -11,7 +11,8 @@ private:
     void unload();
     
 public:
-	int w, h, frames, delta;
+	int w, h, channels, colChannel, filterType;
+    int frames, delta;
 	unsigned int sheetTextureId = 0;
 	float* clips;
 

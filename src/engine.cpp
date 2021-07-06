@@ -87,7 +87,6 @@ int update() {
 void render() {
         hnd::render();
         spr::push();
-
         spr::flush();
 		fps++;
 }

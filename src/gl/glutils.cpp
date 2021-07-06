@@ -1,4 +1,4 @@
-#include "knapsack/internal/glutils.h"
+#include "knapsack/internal/gl/utils.h"
 
 #include <string>
 

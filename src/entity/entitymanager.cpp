@@ -53,7 +53,6 @@ std::vector<EntityID> ecs::Filter::query() {
     static boost::dynamic_bitset<> zero {CID_MAX, 0};
     std::vector<EntityID> q;
     for (auto& e : all_entity) {
-        bool has = true;
         if (e.second.mask(exc.get(), &zero) && e.second.mask(inc.get()))
             q.push_back(e.first);
     }

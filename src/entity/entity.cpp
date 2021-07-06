@@ -30,6 +30,8 @@ Entity::~Entity() {
 }
 
 void Entity::attach(Renderer* r) {
+    if (!renderers.size())
+        ;//add to render list
     renderers.push_back(r);
 }
 
